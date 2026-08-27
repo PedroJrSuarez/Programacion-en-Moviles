@@ -3,7 +3,7 @@ Laboratorio 02: Carrito de Compras en Kotlin (POO)
 **Estudiante:** Pedro Suarez
 **Curso:** Programación en Móviles - Tecsup
 
-1. Estructura del Prompt Utilizado
+**Estructura del Prompt Utilizado**
 
 Para solicitar la resolución y refactorización de este proyecto, se utilizó la siguiente estructura de Prompt Engineering:
 
@@ -12,9 +12,9 @@ Para solicitar la resolución y refactorización de este proyecto, se utilizó l
 3. **Requisitos Técnicos:** Inclusión explícita de los 4 pilares de POO (Abstracción, Herencia, Polimorfismo y Encapsulamiento) y restricciones de formato.
 4. **Formato de Entregables:** Solicitud de código incremental acoplado a comandos de commit en español.
 
-2. Prompt Enviado a la IA
+**Prompt Enviado a la IA**
 
-Actúa como un **Desarrollador Kotlin Senior y Profesor de Programación Móvil**.
+Actúa como un Desarrollador Kotlin Senior y Profesor de Programación Móvil.
 
 Necesito que me ayudes a resolver la actividad del laboratorio "Carrito de Compras en Kotlin" y luego refactorizarla completamente a Programación Orientada a Objetos (POO).
 
