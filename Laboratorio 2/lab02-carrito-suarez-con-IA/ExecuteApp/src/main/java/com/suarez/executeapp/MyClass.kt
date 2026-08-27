@@ -3,8 +3,20 @@ package com.suarez.executeapp
 data class Producto(
     val nombre: String,
     val precio: Double,
-        var cantidad: Int
-    )
+    var cantidad: Int
+)
+
+fun calcularSubtotal(productos: List<Producto>): Double {
+    var subtotal = 0.0
+    for (p in productos) {
+        subtotal += p.precio * p.cantidad
+    }
+    return subtotal
+}
+
+fun calcularIGV(subtotal: Double): Double = subtotal * 0.18
+
+fun calcularTotal(subtotal: Double, igv: Double): Double = subtotal + igv
 
 fun main() {
     println("=========================================")
@@ -27,4 +39,12 @@ fun main() {
         carrito.add(prod)
         println("Producto agregado: ${prod.nombre}")
     }
+
+    val subtotal = calcularSubtotal(carrito)
+    val igv = calcularIGV(subtotal)
+    val total = calcularTotal(subtotal, igv)
+
+    println("\nSubtotal    : S/ $subtotal")
+    println("IGV (18%)   : S/ $igv")
+    println("TOTAL       : S/ $total")
 }
