@@ -37,9 +37,9 @@ fun mostrarDetalle(productos: List<Producto>) {
 }
 
 fun main() {
-    println("=========================================")
+    println("==========================================")
     println("   CARRITO DE COMPRAS - TIENDA TECSUP    ")
-    println("=========================================")
+    println("==========================================")
 
     val nombreCliente = "Juan Leon"
     val carrito = mutableListOf<Producto>()
