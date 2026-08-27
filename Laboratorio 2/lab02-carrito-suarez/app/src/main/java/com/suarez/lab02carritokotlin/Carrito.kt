@@ -41,6 +41,28 @@ fun mostrarDetalle(productos: List<Producto>) {
     println("-----------------------------------------------------")
 }
 
+fun eliminarProducto(productos: MutableList<Producto>, nombreBuscar: String): Boolean {
+    val removido = productos.removeIf { it.nombre.equals(nombreBuscar, ignoreCase = true) }
+    if (removido) {
+        println("Producto '$nombreBuscar' eliminado correctamente.")
+    } else {
+        println("No se encontro el producto '$nombreBuscar' para eliminar.")
+    }
+    return removido
+}
+
+fun actualizarCantidad(productos: List<Producto>, nombreBuscar: String, nuevaCantidad: Int): Boolean {
+    val producto = productos.find { it.nombre.equals(nombreBuscar, ignoreCase = true) }
+    return if (producto != null) {
+        producto.cantidad = nuevaCantidad
+        println("Cantidad de '${producto.nombre}' actualizada a $nuevaCantidad.")
+        true
+    } else {
+        println("No se encontro el producto '$nombreBuscar' para actualizar.")
+        false
+    }
+}
+
 fun main() {
     println("=========================================")
     println("   CARRITO DE COMPRAS - TIENDA TECSUP    ")
@@ -61,6 +83,11 @@ fun main() {
     }
     println()
 
+    println("Adicional")
+    actualizarCantidad(carrito, "Mouse Logitech", 5)
+    eliminarProducto(carrito, "Audifonos Sony")
+    println("=================================")
+
     mostrarDetalle(carrito)
 
     val subtotal = calcularSubtotal(carrito)
@@ -69,7 +96,7 @@ fun main() {
 
     println(String.format("%-25s : %d", "Cantidad de productos", carrito.size))
     println(String.format("%-25s : S/%8.2f", "Subtotal", subtotal))
-    println(String.format("%-25s : S/%8.2f", "IGV (18%)", igv))
+    println(String.format("%-25s : S/%8.2f", "IGV (18%%)", igv))
     println(String.format("%-25s : S/%8.2f", "TOTAL A PAGAR", total))
 
     val masCaro = carrito.maxByOrNull { it.precio }
