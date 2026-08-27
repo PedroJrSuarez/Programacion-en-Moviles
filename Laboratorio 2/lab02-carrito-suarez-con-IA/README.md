@@ -1,6 +1,7 @@
 Laboratorio 02: Carrito de Compras en Kotlin (POO)
 
 **Estudiante:** Pedro Suarez
+
 **Curso:** Programación en Móviles - Tecsup
 
 **Estructura del Prompt Utilizado**
