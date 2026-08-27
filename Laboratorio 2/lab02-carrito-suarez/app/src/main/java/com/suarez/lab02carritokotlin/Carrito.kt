@@ -22,6 +22,14 @@ fun calcularTotal(subtotal: Double, igv: Double): Double {
     return subtotal + igv
 }
 
+fun calcularDescuento(total: Double): Double {
+    return when {
+        total > 5000.0 -> total * 0.10
+        total > 3000.0 -> total * 0.05
+        else -> 0.0
+    }
+}
+
 fun mostrarDetalle(productos: List<Producto>) {
     println("---------------- DETALLE DEL CARRITO ----------------")
     var i = 1
@@ -63,4 +71,21 @@ fun main() {
     println(String.format("%-25s : S/%8.2f", "Subtotal", subtotal))
     println(String.format("%-25s : S/%8.2f", "IGV (18%)", igv))
     println(String.format("%-25s : S/%8.2f", "TOTAL A PAGAR", total))
+
+    val masCaro = carrito.maxByOrNull { it.precio }
+    if (masCaro != null) {
+        println(String.format("\nProducto mas caro: %s (S/%.2f)", masCaro.nombre, masCaro.precio))
+    }
+
+    val descuento = calcularDescuento(total)
+    val totalConDescuento = total - descuento
+
+    if (descuento > 0) {
+        val minMonto = if (total > 5000) 5000 else 3000
+        val porc = if (total > 5000) "10%" else "5%"
+        println(String.format("Descuento aplicado: %s por compra mayor a S/ %d", porc, minMonto))
+        println(String.format("%-25s : S/%8.2f", "TOTAL CON DESCUENTO", totalConDescuento))
+    }
+
+    println("\nGracias por su compra, $nombreCliente!")
 }
