@@ -38,7 +38,26 @@ fun main() {
         else -> "Requiere autorización"
     }
 
-        val numCuotas = if (totalAPagar > 2500) 3 else 2
+    val numCuotas = if (totalAPagar > 2500) 3 else 2
     val montoPorCuota = totalAPagar / numCuotas
     val formaPago = "$numCuotas cuotas de S/ %.2f cada una".format(montoPorCuota)
+
+    println("\n========================================")
+    println("RESULTADO FINAL")
+    println("ESTUDIANTE: $nombreEstudiante")
+    println("========================================")
+    println("%-20s | %-8s | %-10s".format("curso", "creditos", "costo"))
+    println("----------------------------------------")
+
+    for (curso in listaCursos) {
+        println("%-20s | %-8d | S/ %-8.2f".format(curso.nombre, curso.creditos, curso.costo))
+    }
+
+    println("----------------------------------------")
+    println("CURSO MATRICULADO : ${listaCursos.size}")
+    println("TOTAL DE CREDITO  : $totalCreditos")
+    println("TOTAL A PAGAR     : S/ %.2f".format(totalAPagar))
+    println("Carga Academica   : $cargaAcademica")
+    println("Forma de pago     : $formaPago")
+    println("========================================")
 }
