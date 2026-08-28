@@ -1,18 +1,15 @@
 package com.suarez.proyectomatricula
 
-import java.util.Scanner
-
 fun main() {
-    val scanner = Scanner(System.`in`)
 
     print("Ingrese el nombre del estudiante: ")
-    val nombreEstudiante = scanner.nextLine()
+    val nombreEstudiante = readln()
 
     print("Ingrese la cantidad de cursos a matricular: ")
-    val cantidadCursos = scanner.nextInt()
+    val cantidadCursos = readln().toIntOrNull() ?: 0
 
     print("Ingrese el valor de cada crédito (S/): ")
-    val valorCredito = scanner.nextDouble()
+    val valorCredito = readln().toDoubleOrNull() ?: 0.0
 
     data class Curso(val nombre: String, val creditos: Int, val costo: Double)
     val listaCursos = mutableListOf<Curso>()
@@ -20,10 +17,10 @@ fun main() {
     for (i in 1..cantidadCursos) {
         println("\n--- Curso $i ---")
         print("Nombre del curso: ")
-        val nombreCurso = scanner.next()
+        val nombreCurso = readln()
 
         print("Cantidad de créditos: ")
-        val creditos = scanner.nextInt()
+        val creditos = readln().toIntOrNull() ?: 0
 
         val costoCurso = creditos * valorCredito
         listaCursos.add(Curso(nombreCurso, creditos, costoCurso))
