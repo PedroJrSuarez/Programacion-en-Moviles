@@ -28,4 +28,17 @@ fun main() {
         val costoCurso = creditos * valorCredito
         listaCursos.add(Curso(nombreCurso, creditos, costoCurso))
     }
+
+    val totalCreditos = listaCursos.sumOf { it.creditos }
+    val totalAPagar = totalCreditos * valorCredito
+
+    val cargaAcademica = when {
+        totalCreditos <= 12 -> "Malla regular"
+        totalCreditos in 13..18 -> "Carga completa"
+        else -> "Requiere autorización"
+    }
+
+        val numCuotas = if (totalAPagar > 2500) 3 else 2
+    val montoPorCuota = totalAPagar / numCuotas
+    val formaPago = "$numCuotas cuotas de S/ %.2f cada una".format(montoPorCuota)
 }
