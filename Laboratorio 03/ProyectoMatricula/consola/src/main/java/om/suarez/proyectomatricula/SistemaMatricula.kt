@@ -56,5 +56,6 @@ fun main() {
     println("TOTAL A PAGAR     : S/ %.2f".format(totalAPagar))
     println("Carga Academica   : $cargaAcademica")
     println("Forma de pago     : $formaPago")
-    println("========================================")
+    println("=========================================")
+
 }
