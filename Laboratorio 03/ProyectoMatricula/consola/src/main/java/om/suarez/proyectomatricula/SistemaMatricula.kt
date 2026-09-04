@@ -1,25 +1,19 @@
 package com.suarez.proyectomatricula
 
+data class Curso(val nombre: String, val creditos: Int, val costo: Double)
+
 fun main() {
     print("Ingrese la capacidad máxima del aforo: ")
     val aforoMaximo = readln().toIntOrNull() ?: 18
 
-    print("Ingrese la cantidad de personas a registrar: ")
-    val personasARegistrar = readln().toIntOrNull() ?: 0
+    var estudiantesRegistrados = 0
+    var continuar = true
 
-    val cantidadEstudiantes = if (personasARegistrar > aforoMaximo) {
-        println("Aviso: El número ingresado supera el aforo máximo ($aforoMaximo). Se registrará solo hasta el tope de $aforoMaximo personas.")
-        aforoMaximo
-    } else if (personasARegistrar <= 0) {
-        println("Cantidad no válida. Se registrará 1 persona por defecto.")
-        1
-    } else {
-        personasARegistrar
-    }
+    while (continuar && estudiantesRegistrados < aforoMaximo) {
+        estudiantesRegistrados++
 
-    for (est in 1..cantidadEstudiantes) {
         println("\n========================================")
-        println("REGISTRO DE ESTUDIANTE $est DE $cantidadEstudiantes")
+        println("REGISTRO DE ESTUDIANTE")
         println("========================================")
 
         print("Ingrese el nombre del estudiante: ")
@@ -59,7 +53,6 @@ fun main() {
         print("Ingrese el valor de cada crédito (S/): ")
         val valorCredito = readln().toDoubleOrNull() ?: 0.0
 
-        data class Curso(val nombre: String, val creditos: Int, val costo: Double)
         val listaCursos = mutableListOf<Curso>()
 
         for (i in 1..cantidadCursos) {
@@ -95,7 +88,7 @@ fun main() {
         val porcentajeTexto = (recargoPorcentaje * 100).toInt()
 
         println("\n========================================")
-        println("AFORO: REGISTRO $est DE $cantidadEstudiantes (CAPACIDAD MÁX: $aforoMaximo)")
+        println("AFORO: REGISTRO $estudiantesRegistrados (CAPACIDAD MÁX: $aforoMaximo)")
         println("========================================")
         println("RESULTADO FINAL")
         println("ESTUDIANTE: $nombreEstudiante")
@@ -121,5 +114,16 @@ fun main() {
         println("Carga Academica   : $cargaAcademica")
         println("Forma de pago     : $formaPago")
         println("========================================")
+
+        // Verificación de aforo y pregunta para continuar
+        if (estudiantesRegistrados < aforoMaximo) {
+            print("\n¿Desea registrar a otro estudiante? (S/N): ")
+            val respuesta = readln().trim()
+            continuar = respuesta.equals("S", ignoreCase = true) || respuesta.equals("SI", ignoreCase = true)
+        } else {
+            println("\n[AVISO]: Se ha alcanzado la capacidad máxima del aforo ($aforoMaximo estudiantes).")
+        }
     }
+
+    println("\nProceso de matrícula finalizado. Total registrados: $estudiantesRegistrados.")
 }
