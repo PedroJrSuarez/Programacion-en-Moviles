@@ -2,9 +2,56 @@ package com.suarez.proyectomatricula
 
 data class Curso(val nombre: String, val creditos: Int, val costo: Double)
 
+fun leerTextoObligatorio(mensaje: String): String {
+    var entrada: String
+    do {
+        print(mensaje)
+        entrada = readln().trim()
+        if (entrada.isEmpty()) {
+            println("[ERROR]: Este campo es obligatorio. No puede estar vacío.")
+        }
+    } while (entrada.isEmpty())
+    return entrada
+}
+
+fun leerEnteroValido(mensaje: String, minimo: Int = 1): Int {
+    var valor: Int? = null
+    do {
+        print(mensaje)
+        valor = readln().toIntOrNull()
+        if (valor == null || valor < minimo) {
+            println("[ERROR]: Debe ingresar un número entero mayor o igual a $minimo.")
+        }
+    } while (valor == null || valor < minimo)
+    return valor
+}
+
+fun leerDecimalValido(mensaje: String, minimo: Double = 0.0): Double {
+    var valor: Double? = null
+    do {
+        print(mensaje)
+        valor = readln().toDoubleOrNull()
+        if (valor == null || valor < minimo) {
+            println("[ERROR]: Debe ingresar un monto numérico válido mayor o igual a $minimo.")
+        }
+    } while (valor == null || valor < minimo)
+    return valor
+}
+
+fun leerOpcionRango(mensaje: String, min: Int, max: Int): Int {
+    var opcion: Int? = null
+    do {
+        print(mensaje)
+        opcion = readln().toIntOrNull()
+        if (opcion == null || opcion !in min..max) {
+            println("[ERROR]: Selección inválida. Ingrese una opción entre $min y $max.")
+        }
+    } while (opcion == null || opcion !in min..max)
+    return opcion
+}
+
 fun main() {
-    print("Ingrese la capacidad máxima del aforo: ")
-    val aforoMaximo = readln().toIntOrNull() ?: 18
+    val aforoMaximo = leerEnteroValido("Ingrese la capacidad máxima del aforo: ", minimo = 1)
 
     var estudiantesRegistrados = 0
     var continuar = true
@@ -13,18 +60,16 @@ fun main() {
         estudiantesRegistrados++
 
         println("\n========================================")
-        println("REGISTRO DE ESTUDIANTE")
+        println("REGISTRO DE ESTUDIANTE $estudiantesRegistrados DE $aforoMaximo")
         println("========================================")
 
-        print("Ingrese el nombre del estudiante: ")
-        val nombreEstudiante = readln()
+        val nombreEstudiante = leerTextoObligatorio("Ingrese el nombre del estudiante: ")
 
         println("\nSeleccione el turno:")
         println("1. Mañana (+10%)")
         println("2. Tarde (+15%)")
         println("3. Noche (+20%)")
-        print("Opción: ")
-        val opcionTurno = readln().toIntOrNull() ?: 1
+        val opcionTurno = leerOpcionRango("Opción (1-3): ", 1, 3)
 
         val (turno, recargoPorcentaje) = when (opcionTurno) {
             1 -> "Mañana" to 0.10
@@ -36,32 +81,25 @@ fun main() {
         println("\nSeleccione la categoría:")
         println("1. Ordinario")
         println("2. Becario")
-        print("Opción: ")
-        val opcionCategoria = readln().toIntOrNull() ?: 1
+        val opcionCategoria = leerOpcionRango("Opción (1-2): ", 1, 2)
 
         val (categoria, costoMatricula) = if (opcionCategoria == 2) {
             "Becario" to 0.0
         } else {
-            print("Ingrese el precio de la matrícula (S/): ")
-            val precio = readln().toDoubleOrNull() ?: 0.0
+            val precio = leerDecimalValido("Ingrese el precio de la matrícula (S/): ", minimo = 0.0)
             "Ordinario" to precio
         }
 
-        print("\nIngrese la cantidad de cursos a matricular: ")
-        val cantidadCursos = readln().toIntOrNull() ?: 0
-
-        print("Ingrese el valor de cada crédito (S/): ")
-        val valorCredito = readln().toDoubleOrNull() ?: 0.0
+        println()
+        val cantidadCursos = leerEnteroValido("Ingrese la cantidad de cursos a matricular: ", minimo = 1)
+        val valorCredito = leerDecimalValido("Ingrese el valor de cada crédito (S/): ", minimo = 0.01)
 
         val listaCursos = mutableListOf<Curso>()
 
         for (i in 1..cantidadCursos) {
             println("\n--- Curso $i ---")
-            print("Nombre del curso: ")
-            val nombreCurso = readln()
-
-            print("Cantidad de créditos: ")
-            val creditos = readln().toIntOrNull() ?: 0
+            val nombreCurso = leerTextoObligatorio("Nombre del curso: ")
+            val creditos = leerEnteroValido("Cantidad de créditos: ", minimo = 1)
 
             val costoCurso = creditos * valorCredito
             listaCursos.add(Curso(nombreCurso, creditos, costoCurso))
@@ -115,7 +153,6 @@ fun main() {
         println("Forma de pago     : $formaPago")
         println("========================================")
 
-        // Verificación de aforo y pregunta para continuar
         if (estudiantesRegistrados < aforoMaximo) {
             print("\n¿Desea registrar a otro estudiante? (S/N): ")
             val respuesta = readln().trim()
