@@ -1,13 +1,14 @@
 package com.suarez.proyectomatricula
 
 fun main() {
-    val aforoMaximo = 18
+    print("Ingrese la capacidad máxima del aforo: ")
+    val aforoMaximo = readln().toIntOrNull() ?: 18
 
-    print("Ingrese la cantidad de personas a registrar (Máximo $aforoMaximo): ")
+    print("Ingrese la cantidad de personas a registrar: ")
     val personasARegistrar = readln().toIntOrNull() ?: 0
 
     val cantidadEstudiantes = if (personasARegistrar > aforoMaximo) {
-        println("Aviso: El número ingresado supera el aforo límite. Se registrará solo hasta el tope de $aforoMaximo personas.")
+        println("Aviso: El número ingresado supera el aforo máximo ($aforoMaximo). Se registrará solo hasta el tope de $aforoMaximo personas.")
         aforoMaximo
     } else if (personasARegistrar <= 0) {
         println("Cantidad no válida. Se registrará 1 persona por defecto.")
