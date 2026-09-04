@@ -5,7 +5,21 @@ fun main() {
     print("Ingrese el nombre del estudiante: ")
     val nombreEstudiante = readln()
 
-    print("Ingrese la cantidad de cursos a matricular: ")
+    println("\nSeleccione el turno:")
+    println("1. Mañana (+10%)")
+    println("2. Tarde (+15%)")
+    println("3. Noche (+20%)")
+    print("Opción: ")
+    val opcionTurno = readln().toIntOrNull() ?: 1
+
+    val (turno, recargoPorcentaje) = when (opcionTurno) {
+        1 -> "Mañana" to 0.10
+        2 -> "Tarde" to 0.15
+        3 -> "Noche" to 0.20
+        else -> "Mañana" to 0.10
+    }
+
+    print("\nIngrese la cantidad de cursos a matricular: ")
     val cantidadCursos = readln().toIntOrNull() ?: 0
 
     print("Ingrese el valor de cada crédito (S/): ")
@@ -27,7 +41,9 @@ fun main() {
     }
 
     val totalCreditos = listaCursos.sumOf { it.creditos }
-    val totalAPagar = totalCreditos * valorCredito
+    val subtotalCreditos = totalCreditos * valorCredito
+    val montoRecargo = subtotalCreditos * recargoPorcentaje
+    val totalAPagar = subtotalCreditos + montoRecargo
 
     val cargaAcademica = when {
         totalCreditos <= 12 -> "Malla regular"
@@ -37,11 +53,14 @@ fun main() {
 
     val numCuotas = if (totalAPagar > 2500) 3 else 2
     val montoPorCuota = totalAPagar / numCuotas
-    val formaPago = "$numCuotas cuotas de S/ %.2f cada una".format(montoPorCuota)
+    val formaPago = String.format("%d cuotas de S/ %.2f cada una", numCuotas, montoPorCuota)
+
+    val porcentajeTexto = (recargoPorcentaje * 100).toInt()
 
     println("\n========================================")
     println("RESULTADO FINAL")
     println("ESTUDIANTE: $nombreEstudiante")
+    println("TURNO     : $turno (+$porcentajeTexto%)")
     println("========================================")
     println("%-20s | %-8s | %-10s".format("curso", "creditos", "costo"))
     println("----------------------------------------")
@@ -53,9 +72,10 @@ fun main() {
     println("----------------------------------------")
     println("CURSO MATRICULADO : ${listaCursos.size}")
     println("TOTAL DE CREDITO  : $totalCreditos")
+    println("SUBTOTAL CREDITOS : S/ %.2f".format(subtotalCreditos))
+    println("RECARGO TURNO     : S/ %.2f".format(montoRecargo))
     println("TOTAL A PAGAR     : S/ %.2f".format(totalAPagar))
     println("Carga Academica   : $cargaAcademica")
     println("Forma de pago     : $formaPago")
-    println("=========================================")
-
+    println("========================================")
 }
