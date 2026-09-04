@@ -19,6 +19,20 @@ fun main() {
         else -> "Mañana" to 0.10
     }
 
+    println("\nSeleccione la categoría:")
+    println("1. Ordinario")
+    println("2. Becario")
+    print("Opción: ")
+    val opcionCategoria = readln().toIntOrNull() ?: 1
+
+    val (categoria, costoMatricula) = if (opcionCategoria == 2) {
+        "Becario" to 0.0
+    } else {
+        print("Ingrese el precio de la matrícula (S/): ")
+        val precio = readln().toDoubleOrNull() ?: 0.0
+        "Ordinario" to precio
+    }
+
     print("\nIngrese la cantidad de cursos a matricular: ")
     val cantidadCursos = readln().toIntOrNull() ?: 0
 
@@ -43,7 +57,7 @@ fun main() {
     val totalCreditos = listaCursos.sumOf { it.creditos }
     val subtotalCreditos = totalCreditos * valorCredito
     val montoRecargo = subtotalCreditos * recargoPorcentaje
-    val totalAPagar = subtotalCreditos + montoRecargo
+    val totalAPagar = subtotalCreditos + montoRecargo + costoMatricula
 
     val cargaAcademica = when {
         totalCreditos <= 12 -> "Malla regular"
@@ -61,6 +75,7 @@ fun main() {
     println("RESULTADO FINAL")
     println("ESTUDIANTE: $nombreEstudiante")
     println("TURNO     : $turno (+$porcentajeTexto%)")
+    println("CATEGORÍA : $categoria")
     println("========================================")
     println("%-20s | %-8s | %-10s".format("curso", "creditos", "costo"))
     println("----------------------------------------")
@@ -74,6 +89,7 @@ fun main() {
     println("TOTAL DE CREDITO  : $totalCreditos")
     println("SUBTOTAL CREDITOS : S/ %.2f".format(subtotalCreditos))
     println("RECARGO TURNO     : S/ %.2f".format(montoRecargo))
+    println("MATRÍCULA         : S/ %.2f".format(costoMatricula))
     println("TOTAL A PAGAR     : S/ %.2f".format(totalAPagar))
     println("Carga Academica   : $cargaAcademica")
     println("Forma de pago     : $formaPago")
