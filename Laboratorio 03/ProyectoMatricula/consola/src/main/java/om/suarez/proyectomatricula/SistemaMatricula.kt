@@ -57,7 +57,10 @@ fun main() {
     val totalCreditos = listaCursos.sumOf { it.creditos }
     val subtotalCreditos = totalCreditos * valorCredito
     val montoRecargo = subtotalCreditos * recargoPorcentaje
-    val totalAPagar = subtotalCreditos + montoRecargo + costoMatricula
+    val subtotalBruto = subtotalCreditos + montoRecargo + costoMatricula
+
+    val igv = subtotalBruto * 0.18
+    val totalAPagar = subtotalBruto + igv
 
     val cargaAcademica = when {
         totalCreditos <= 12 -> "Malla regular"
@@ -90,6 +93,8 @@ fun main() {
     println("SUBTOTAL CREDITOS : S/ %.2f".format(subtotalCreditos))
     println("RECARGO TURNO     : S/ %.2f".format(montoRecargo))
     println("MATRÍCULA         : S/ %.2f".format(costoMatricula))
+    println("SUBTOTAL NETO     : S/ %.2f".format(subtotalBruto))
+    println("IGV (18%%)        : S/ %.2f".format(igv))
     println("TOTAL A PAGAR     : S/ %.2f".format(totalAPagar))
     println("Carga Academica   : $cargaAcademica")
     println("Forma de pago     : $formaPago")
