@@ -57,6 +57,7 @@ fun RegistroNotasApp() {
 
     var redondear by remember { mutableStateOf(false) }
     var confirmado by remember { mutableStateOf(false) }
+    var calculado by remember { mutableStateOf(false) }
 
     val purpleColor = Color(0xFF5B45A0)
     val lightPurpleChip = Color(0xFFEDE7F6)
@@ -102,7 +103,7 @@ fun RegistroNotasApp() {
                 nota = nota1,
                 purpleColor = purpleColor,
                 chipColor = lightPurpleChip,
-                onValueChange = { nota1 = it }
+                onValueChange = { nota1 = it; calculado = false }
             )
             ItemCurso(
                 nombre = "Programación Orientada a Objetos",
@@ -110,7 +111,7 @@ fun RegistroNotasApp() {
                 nota = nota2,
                 purpleColor = purpleColor,
                 chipColor = lightPurpleChip,
-                onValueChange = { nota2 = it }
+                onValueChange = { nota2 = it; calculado = false }
             )
             ItemCurso(
                 nombre = "Programación en Móviles",
@@ -118,7 +119,7 @@ fun RegistroNotasApp() {
                 nota = nota3,
                 purpleColor = purpleColor,
                 chipColor = lightPurpleChip,
-                onValueChange = { nota3 = it }
+                onValueChange = { nota3 = it; calculado = false }
             )
             ItemCurso(
                 nombre = "Base de Datos",
@@ -126,7 +127,7 @@ fun RegistroNotasApp() {
                 nota = nota4,
                 purpleColor = purpleColor,
                 chipColor = lightPurpleChip,
-                onValueChange = { nota4 = it }
+                onValueChange = { nota4 = it; calculado = false }
             )
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -157,6 +158,38 @@ fun RegistroNotasApp() {
                     colors = CheckboxDefaults.colors(checkedColor = purpleColor)
                 )
                 Text("Confirmo que las notas son correctas", fontSize = 14.sp, color = Color(0xFF1D1B20))
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Button(
+                onClick = { calculado = true },
+                enabled = confirmado,
+                shape = RoundedCornerShape(24.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(50.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = purpleColor,
+                    disabledContainerColor = Color(0xFFC8BFE7),
+                    disabledContentColor = Color.White
+                )
+            ) {
+                Text(
+                    "CALCULAR PROMEDIO",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 15.sp,
+                    letterSpacing = 0.5.sp
+                )
+            }
+
+            if (!calculado) {
+                Spacer(modifier = Modifier.height(16.dp))
+                Text(
+                    text = "Asigna las notas y confirma para calcular",
+                    color = Color(0xFF79747E),
+                    fontSize = 13.sp
+                )
             }
         }
     }
