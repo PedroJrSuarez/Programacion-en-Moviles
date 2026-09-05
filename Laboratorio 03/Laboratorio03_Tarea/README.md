@@ -17,7 +17,9 @@ Tecnologías Utilizadas
 Capturas de Pantalla
 
 1. Pantalla Inicial
+---
 ![img.png](img.png)
 
 2. Promedio Calculado
+---
 ![img_1.png](img_1.png)
