@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
@@ -128,6 +129,7 @@ fun RegistroNotasApp() {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ItemCurso(
     nombre: String,
@@ -164,5 +166,41 @@ fun ItemCurso(
                 )
             }
         }
+
+        Slider(
+            value = nota,
+            onValueChange = onValueChange,
+            valueRange = 0f..20f,
+            colors = SliderDefaults.colors(
+                thumbColor = Color(0xFF65558F),
+                activeTickColor = Color.Transparent,
+                inactiveTickColor = Color.Transparent
+            ),
+            thumb = {
+                Box(
+                    modifier = Modifier
+                        .size(20.dp)
+                        .background(Color(0xFF65558F), shape = CircleShape)
+                )
+            },
+            track = { sliderState ->
+                val fraction = (sliderState.value - sliderState.valueRange.start) /
+                        (sliderState.valueRange.endInclusive - sliderState.valueRange.start)
+
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(4.dp)
+                        .background(Color(0xFFE6E0E9), shape = CircleShape)
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth(fraction)
+                            .fillMaxHeight()
+                            .background(Color(0xFF65558F), shape = CircleShape)
+                    )
+                }
+            }
+        )
     }
 }
