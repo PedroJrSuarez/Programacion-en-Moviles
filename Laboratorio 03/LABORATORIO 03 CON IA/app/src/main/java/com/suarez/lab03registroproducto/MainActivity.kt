@@ -147,8 +147,7 @@ fun PantallaRegistro(modifier: Modifier = Modifier) {
             }
 
             Spacer(modifier = Modifier.width(8.dp))
-
-            // Mejorado a OutlinedButton para jerarquía visual secundaria
+            
             OutlinedButton(
                 onClick = {
                     nombre = ""
