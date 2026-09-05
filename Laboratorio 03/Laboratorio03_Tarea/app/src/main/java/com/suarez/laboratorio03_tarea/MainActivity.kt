@@ -3,27 +3,22 @@ package com.suarez.laboratorio03_tarea
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.suarez.laboratorio03_tarea.ui.theme.Laboratorio03_TareaTheme
+import androidx.compose.ui.graphics.Color
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContent {
-            Laboratorio03_TareaTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+            RegistroNotasTheme {
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = Color(0xFFECE6F0)
+                ) {
+                    RegistroNotasApp()
                 }
             }
         }
@@ -31,17 +26,21 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
+fun RegistroNotasTheme(content: @Composable () -> Unit) {
+    val purpleTheme = lightColorScheme(
+        primary = Color(0xFF65558F),
+        onPrimary = Color.White,
+        primaryContainer = Color(0xFFE8DEF8),
+        onPrimaryContainer = Color(0xFF1D192B),
+        surface = Color.White,
+        background = Color(0xFFECE6F0)
+    )
+    MaterialTheme(
+        colorScheme = purpleTheme,
+        content = content
     )
 }
 
-@Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
-    Laboratorio03_TareaTheme {
-        Greeting("Android")
-    }
+fun RegistroNotasApp() {
 }
