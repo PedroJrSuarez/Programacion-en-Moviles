@@ -47,7 +47,10 @@ fun RegistroNotasTheme(content: @Composable () -> Unit) {
         surface = Color.White,
         background = Color(0xFFECE6F0)
     )
-    MaterialTheme(colorScheme = purpleTheme, content = content)
+    MaterialTheme(
+        colorScheme = purpleTheme,
+        content = content
+    )
 }
 
 @Composable
@@ -62,7 +65,6 @@ fun RegistroNotasApp() {
     var calculado by remember { mutableStateOf(false) }
 
     val purpleColor = Color(0xFF5B45A0)
-    val lightPurpleChip = Color(0xFFEDE7F6)
 
     Column(
         modifier = Modifier
@@ -104,31 +106,30 @@ fun RegistroNotasApp() {
                 porcentaje = "20%",
                 nota = nota1,
                 purpleColor = purpleColor,
-                chipColor = lightPurpleChip,
                 onValueChange = { nota1 = it; calculado = false }
             )
+
             ItemCurso(
                 nombre = "Programación Orientada a Objetos",
                 porcentaje = "25%",
                 nota = nota2,
                 purpleColor = purpleColor,
-                chipColor = lightPurpleChip,
                 onValueChange = { nota2 = it; calculado = false }
             )
+
             ItemCurso(
                 nombre = "Programación en Móviles",
                 porcentaje = "30%",
                 nota = nota3,
                 purpleColor = purpleColor,
-                chipColor = lightPurpleChip,
                 onValueChange = { nota3 = it; calculado = false }
             )
+
             ItemCurso(
                 nombre = "Base de Datos",
                 porcentaje = "25%",
                 nota = nota4,
                 purpleColor = purpleColor,
-                chipColor = lightPurpleChip,
                 onValueChange = { nota4 = it; calculado = false }
             )
 
@@ -185,6 +186,31 @@ fun RegistroNotasApp() {
                 )
             }
 
+            Spacer(modifier = Modifier.height(8.dp))
+
+            OutlinedButton(
+                onClick = {
+                    nota1 = 0f
+                    nota2 = 0f
+                    nota3 = 0f
+                    nota4 = 0f
+                    redondear = false
+                    confirmado = false
+                    calculado = false
+                },
+                shape = RoundedCornerShape(24.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(45.dp)
+            ) {
+                Text(
+                    "LIMPIAR",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 14.sp,
+                    color = purpleColor
+                )
+            }
+
             if (!calculado) {
                 Spacer(modifier = Modifier.height(16.dp))
                 Text(
@@ -206,6 +232,21 @@ fun RegistroNotasApp() {
                     elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
                 ) {
                     Column(modifier = Modifier.padding(16.dp)) {
+
+                        Text(
+                            text = "Aporte por curso:",
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 14.sp,
+                            color = Color(0xFF1D1B20)
+                        )
+                        Spacer(modifier = Modifier.height(4.dp))
+                        Text("• Fundamentos: ${nota1.toInt()} × 20% = ${String.format(Locale.US, "%.2f", nota1 * 0.20f)}", fontSize = 13.sp, color = Color(0xFF49454F))
+                        Text("• POO: ${nota2.toInt()} × 25% = ${String.format(Locale.US, "%.2f", nota2 * 0.25f)}", fontSize = 13.sp, color = Color(0xFF49454F))
+                        Text("• Móviles: ${nota3.toInt()} × 30% = ${String.format(Locale.US, "%.2f", nota3 * 0.30f)}", fontSize = 13.sp, color = Color(0xFF49454F))
+                        Text("• Base de Datos: ${nota4.toInt()} × 25% = ${String.format(Locale.US, "%.2f", nota4 * 0.25f)}", fontSize = 13.sp, color = Color(0xFF49454F))
+
+                        Divider(modifier = Modifier.padding(vertical = 12.dp), color = Color(0xFFE6E0E9))
+
                         Row {
                             Text("Promedio ponderado: ", fontSize = 15.sp, color = Color(0xFF49454F))
                             Text(
@@ -248,7 +289,28 @@ fun RegistroNotasApp() {
                         }
                     }
                 }
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text("✓ ", color = Color(0xFF2E7D32), fontWeight = FontWeight.Bold)
+                    Text(
+                        text = "Promedio calculado correctamente",
+                        color = Color(0xFF2E7D32),
+                        fontSize = 13.sp,
+                        fontWeight = FontWeight.Medium
+                    )
+                }
             }
+
+            Spacer(modifier = Modifier.height(5.dp))
+            Text(
+                text = "Desarrollado por: Pedro Suarez",
+                fontSize = 12.sp,
+                color = Color(0xFF79747E),
+                modifier = Modifier.fillMaxWidth(),
+                textAlign = TextAlign.Center
+            )
         }
     }
 }
@@ -260,9 +322,11 @@ fun ItemCurso(
     porcentaje: String,
     nota: Float,
     purpleColor: Color,
-    chipColor: Color,
     onValueChange: (Float) -> Unit
 ) {
+    val badgeBgColor = if (nota < 13f) Color(0xFFFFEBEE) else Color(0xFFE8F5E9)
+    val badgeTextColor = if (nota < 13f) Color(0xFFC62828) else Color(0xFF2E7D32)
+
     Column(modifier = Modifier.padding(bottom = 8.dp)) {
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -276,14 +340,14 @@ fun ItemCurso(
             }
 
             Surface(
-                color = chipColor,
+                color = badgeBgColor,
                 shape = RoundedCornerShape(8.dp),
                 modifier = Modifier.widthIn(min = 36.dp)
             ) {
                 Text(
                     text = "${nota.toInt()}",
                     fontWeight = FontWeight.Bold,
-                    color = purpleColor,
+                    color = badgeTextColor,
                     fontSize = 13.sp,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
