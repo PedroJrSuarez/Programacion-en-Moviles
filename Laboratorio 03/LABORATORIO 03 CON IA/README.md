@@ -6,9 +6,11 @@ Laboratorio 03: Registro de Producto
 ## Capturas de Pantalla
 
 1. Pantalla Inicial
+
 ![alt text](image-1.png)
 
 2. Producto Registrado
+
 ![alt text](image.png)
 
 
