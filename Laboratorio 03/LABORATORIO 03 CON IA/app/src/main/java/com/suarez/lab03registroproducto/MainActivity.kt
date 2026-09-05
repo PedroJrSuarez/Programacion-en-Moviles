@@ -28,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.suarez.lab03registroproducto.ui.theme.Lab03RegistroProductoTheme
 
 class MainActivity : ComponentActivity() {
@@ -51,6 +52,7 @@ fun PantallaRegistro(modifier: Modifier = Modifier) {
     var precio by remember { mutableStateOf("") }
     var cantidad by remember { mutableStateOf("") }
     var mostrarResumen by remember { mutableStateOf(false) }
+    var mensajeError by remember { mutableStateOf("") }
 
     Column(
         modifier = modifier
@@ -95,14 +97,63 @@ fun PantallaRegistro(modifier: Modifier = Modifier) {
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        Button(
-            onClick = { mostrarResumen = true },
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text("AGREGAR PRODUCTO")
+        Row(modifier = Modifier.fillMaxWidth()) {
+            Button(
+                onClick = {
+                    val precioNum = precio.toDoubleOrNull()
+                    val cantidadNum = cantidad.toIntOrNull()
+                    val soloLetrasRegex = Regex("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$")
+
+                    if (nombre.isBlank() || precio.isBlank() || cantidad.isBlank()) {
+                        mensajeError = "Todos los campos son obligatorios"
+                        mostrarResumen = false
+                    } else if (!nombre.matches(soloLetrasRegex)) {
+                        mensajeError = "El nombre del producto solo debe contener letras"
+                        mostrarResumen = false
+                    } else if (precioNum == null || cantidadNum == null) {
+                        mensajeError = "Ingresa números válidos en Precio y Cantidad"
+                        mostrarResumen = false
+                    } else if (precioNum <= 0) {
+                        mensajeError = "El precio debe ser mayor a 0"
+                        mostrarResumen = false
+                    } else if (cantidadNum <= 0) {
+                        mensajeError = "La cantidad debe ser mayor a 0"
+                        mostrarResumen = false
+                    } else {
+                        mensajeError = ""
+                        mostrarResumen = true
+                    }
+                },
+                modifier = Modifier.weight(1f)
+            ) {
+                Text("AGREGAR PRODUCTO", fontSize = 12.sp)
+            }
+
+            Spacer(modifier = Modifier.width(8.dp))
+
+            Button(
+                onClick = {
+                    nombre = ""
+                    precio = ""
+                    cantidad = ""
+                    mostrarResumen = false
+                    mensajeError = ""
+                },
+                modifier = Modifier.weight(1f)
+            ) {
+                Text("LIMPIAR", fontSize = 12.sp)
+            }
         }
 
         Spacer(modifier = Modifier.height(24.dp))
+
+        if (mensajeError.isNotBlank()) {
+            Text(
+                text = mensajeError,
+                color = MaterialTheme.colorScheme.error,
+                style = MaterialTheme.typography.bodyMedium
+            )
+        }
 
         if (mostrarResumen) {
             val precioNum = precio.toDoubleOrNull() ?: 0.0
@@ -134,7 +185,7 @@ fun PantallaRegistro(modifier: Modifier = Modifier) {
                 color = Color(0xFF2E7D32),
                 style = MaterialTheme.typography.bodyMedium
             )
-        } else {
+        } else if (mensajeError.isBlank()) {
             Text(
                 text = "Aún no has registrado ningún producto",
                 color = MaterialTheme.colorScheme.outline
