@@ -6,12 +6,15 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -46,7 +49,13 @@ fun RegistroNotasTheme(content: @Composable () -> Unit) {
 
 @Composable
 fun RegistroNotasApp() {
+    var nota1 by remember { mutableStateOf(0f) }
+    var nota2 by remember { mutableStateOf(0f) }
+    var nota3 by remember { mutableStateOf(0f) }
+    var nota4 by remember { mutableStateOf(0f) }
+
     val purpleColor = Color(0xFF5B45A0)
+    val lightPurpleChip = Color(0xFFEDE7F6)
 
     Column(
         modifier = Modifier
@@ -80,6 +89,80 @@ fun RegistroNotasApp() {
                 color = Color(0xFF79747E),
                 fontSize = 13.sp
             )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            ItemCurso(
+                nombre = "Fundamentos de Programación",
+                porcentaje = "20%",
+                nota = nota1,
+                purpleColor = purpleColor,
+                chipColor = lightPurpleChip,
+                onValueChange = { nota1 = it }
+            )
+            ItemCurso(
+                nombre = "Programación Orientada a Objetos",
+                porcentaje = "25%",
+                nota = nota2,
+                purpleColor = purpleColor,
+                chipColor = lightPurpleChip,
+                onValueChange = { nota2 = it }
+            )
+            ItemCurso(
+                nombre = "Programación en Móviles",
+                porcentaje = "30%",
+                nota = nota3,
+                purpleColor = purpleColor,
+                chipColor = lightPurpleChip,
+                onValueChange = { nota3 = it }
+            )
+            ItemCurso(
+                nombre = "Base de Datos",
+                porcentaje = "25%",
+                nota = nota4,
+                purpleColor = purpleColor,
+                chipColor = lightPurpleChip,
+                onValueChange = { nota4 = it }
+            )
+        }
+    }
+}
+
+@Composable
+fun ItemCurso(
+    nombre: String,
+    porcentaje: String,
+    nota: Float,
+    purpleColor: Color,
+    chipColor: Color,
+    onValueChange: (Float) -> Unit
+) {
+    Column(modifier = Modifier.padding(bottom = 8.dp)) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(nombre, fontWeight = FontWeight.Bold, fontSize = 13.sp, color = Color(0xFF1D1B20))
+                Spacer(modifier = Modifier.width(4.dp))
+                Text("($porcentaje)", fontSize = 11.sp, color = Color(0xFF938F96))
+            }
+
+            Surface(
+                color = chipColor,
+                shape = RoundedCornerShape(8.dp),
+                modifier = Modifier.widthIn(min = 36.dp)
+            ) {
+                Text(
+                    text = "${nota.toInt()}",
+                    fontWeight = FontWeight.Bold,
+                    color = purpleColor,
+                    fontSize = 13.sp,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+                )
+            }
         }
     }
 }
