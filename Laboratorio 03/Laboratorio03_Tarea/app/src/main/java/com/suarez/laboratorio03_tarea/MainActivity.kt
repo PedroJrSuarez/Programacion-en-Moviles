@@ -55,6 +55,9 @@ fun RegistroNotasApp() {
     var nota3 by remember { mutableStateOf(0f) }
     var nota4 by remember { mutableStateOf(0f) }
 
+    var redondear by remember { mutableStateOf(false) }
+    var confirmado by remember { mutableStateOf(false) }
+
     val purpleColor = Color(0xFF5B45A0)
     val lightPurpleChip = Color(0xFFEDE7F6)
 
@@ -125,6 +128,36 @@ fun RegistroNotasApp() {
                 chipColor = lightPurpleChip,
                 onValueChange = { nota4 = it }
             )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text("Redondear promedio final", fontSize = 14.sp, color = Color(0xFF1D1B20))
+                Switch(
+                    checked = redondear,
+                    onCheckedChange = { redondear = it },
+                    colors = SwitchDefaults.colors(
+                        checkedThumbColor = Color.White,
+                        checkedTrackColor = purpleColor
+                    )
+                )
+            }
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.padding(vertical = 4.dp)
+            ) {
+                Checkbox(
+                    checked = confirmado,
+                    onCheckedChange = { confirmado = it },
+                    colors = CheckboxDefaults.colors(checkedColor = purpleColor)
+                )
+                Text("Confirmo que las notas son correctas", fontSize = 14.sp, color = Color(0xFF1D1B20))
+            }
         }
     }
 }
