@@ -18,6 +18,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import java.util.Locale
+import kotlin.math.roundToInt
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -190,6 +192,62 @@ fun RegistroNotasApp() {
                     color = Color(0xFF79747E),
                     fontSize = 13.sp
                 )
+            } else {
+                val pPonderado = calcularPonderado(nota1, nota2, nota3, nota4)
+                val pFinal = if (redondear) pPonderado.roundToInt().toFloat() else pPonderado
+                val (obsTexto, obsColor) = obtenerObservacion(pFinal)
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Card(
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(16.dp),
+                    colors = CardDefaults.cardColors(containerColor = Color.White),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
+                ) {
+                    Column(modifier = Modifier.padding(16.dp)) {
+                        Row {
+                            Text("Promedio ponderado: ", fontSize = 15.sp, color = Color(0xFF49454F))
+                            Text(
+                                String.format(Locale.US, "%.2f", pPonderado),
+                                fontSize = 15.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = Color(0xFF49454F)
+                            )
+                        }
+
+                        Spacer(modifier = Modifier.height(4.dp))
+
+                        Row(verticalAlignment = Alignment.Bottom) {
+                            Text("Promedio final: ", fontWeight = FontWeight.Bold, fontSize = 18.sp, color = purpleColor)
+                            Text(
+                                text = if (redondear) "${pFinal.toInt()}" else String.format(Locale.US, "%.2f", pFinal),
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 20.sp,
+                                color = purpleColor
+                            )
+                        }
+
+                        if (redondear) {
+                            Text("(redondeado)", fontSize = 12.sp, color = Color(0xFF79747E))
+                        }
+
+                        Spacer(modifier = Modifier.height(12.dp))
+
+                        Surface(
+                            color = Color(0xFFE8F5E9),
+                            shape = RoundedCornerShape(12.dp)
+                        ) {
+                            Text(
+                                text = obsTexto,
+                                color = obsColor,
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 13.sp,
+                                modifier = Modifier.padding(horizontal = 16.dp, vertical = 6.dp)
+                            )
+                        }
+                    }
+                }
             }
         }
     }
@@ -268,5 +326,18 @@ fun ItemCurso(
                 }
             }
         )
+    }
+}
+
+fun calcularPonderado(n1: Float, n2: Float, n3: Float, n4: Float): Float {
+    return (n1 * 0.20f) + (n2 * 0.25f) + (n3 * 0.30f) + (n4 * 0.25f)
+}
+
+fun obtenerObservacion(promedio: Float): Pair<String, Color> {
+    return when {
+        promedio >= 17f -> Pair("EXCELENTE", Color(0xFF2E7D32))
+        promedio >= 13f -> Pair("APROBADO", Color(0xFF2E7D32))
+        promedio >= 10f -> Pair("EN RECUPERACIÓN", Color(0xFFF57F17))
+        else -> Pair("DESAPROBADO", Color(0xFFC62828))
     }
 }
