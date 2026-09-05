@@ -6,10 +6,11 @@ Laboratorio 03: Registro de Producto
 ## Capturas de Pantalla
 
 1. Pantalla Inicial
-![Pantalla Inicial.png](../Pantalla%20Inicial.png)
+<img width="476" height="1107" alt="Pantalla Inicial" src="https://github.com/user-attachments/assets/e125aea6-6b97-4ee2-8233-5d1ccb3f8f68" />
 
 2. Producto Registrado
-![Producto Registrado.png](../Producto%20Registrado.png)
+<img width="477" height="1108" alt="Producto Registrado" src="https://github.com/user-attachments/assets/f71e3894-6754-492f-9e8d-4a0d357cf12e" />
+
 
 ## Pregunta de Reflexión
 
