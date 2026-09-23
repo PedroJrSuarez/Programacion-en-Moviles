@@ -65,3 +65,5 @@ com.suarez.clinicasalud/
 ---
 
 ## Proyecto en Funcionamiento
+<img width="1818" height="1106" alt="image" src="https://github.com/user-attachments/assets/622ff219-5397-42a2-ae3e-8081d2d6e1a4" />
+
