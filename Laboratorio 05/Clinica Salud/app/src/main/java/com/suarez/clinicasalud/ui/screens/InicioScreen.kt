@@ -61,7 +61,6 @@ fun InicioScreen(
     ) { padding ->
         Column(modifier = Modifier.padding(padding)) {
 
-            // LazyRow — chips de especialidad
             LazyRow(
                 contentPadding = PaddingValues(horizontal = 16.dp, vertical = 14.dp),
                 horizontalArrangement = Arrangement.spacedBy(10.dp)
@@ -92,7 +91,6 @@ fun InicioScreen(
                 modifier = Modifier.padding(horizontal = 16.dp, vertical = 6.dp)
             )
 
-            // LazyColumn — lista principal de médicos
             LazyColumn(
                 contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
                 verticalArrangement = Arrangement.spacedBy(10.dp)

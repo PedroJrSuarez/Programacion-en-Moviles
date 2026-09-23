@@ -16,7 +16,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.tecsup.clinicasalud.ui.theme.*
+import com.suarez.clinicasalud.ui.theme.*
 
 data class DrawerDestino(val label: String)
 
@@ -49,7 +49,7 @@ fun DrawerContent(
                 }
             }
             Spacer(modifier = Modifier.height(16.dp))
-            Divider(color = DividerColor)
+            HorizontalDivider(color = DividerColor)
             Spacer(modifier = Modifier.height(8.dp))
 
             destinosDrawer.forEach { destino ->

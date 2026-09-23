@@ -14,10 +14,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.tecsup.clinicasalud.model.Medico
-import com.tecsup.clinicasalud.model.fechasDisponibles
-import com.tecsup.clinicasalud.model.horasDisponibles
-import com.tecsup.clinicasalud.ui.theme.*
+import com.suarez.clinicasalud.model.Medico
+import com.suarez.clinicasalud.model.fechasDisponibles
+import com.suarez.clinicasalud.model.horasDisponibles
+import com.suarez.clinicasalud.ui.theme.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -94,10 +94,6 @@ fun AgendarCitaScreen(
     }
 }
 
-/**
- * Chip de selección única — se comporta como RadioButton (solo una opción
- * activa a la vez dentro del grupo) aunque visualmente sea una "chip".
- */
 @Composable
 private fun OpcionSeleccionable(
     seleccionado: Boolean,

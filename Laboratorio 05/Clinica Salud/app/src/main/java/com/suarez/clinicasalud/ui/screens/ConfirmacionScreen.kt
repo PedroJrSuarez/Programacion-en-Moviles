@@ -14,8 +14,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.tecsup.clinicasalud.model.Medico
-import com.tecsup.clinicasalud.ui.theme.*
+import com.suarez.clinicasalud.model.Medico
+import com.suarez.clinicasalud.ui.theme.*
 
 @Composable
 fun ConfirmacionScreen(
