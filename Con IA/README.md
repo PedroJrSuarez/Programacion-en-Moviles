@@ -19,7 +19,7 @@ Este README incluye el **prompt maestro** usado para pedirle a un agente de IA (
 ---
 
 ## Programa en funcionamiento
-
+<img width="1829" height="1107" alt="image" src="https://github.com/user-attachments/assets/31ab2eaa-1b76-4156-a095-ad1aa4fa5248" />
 
 ---
 
