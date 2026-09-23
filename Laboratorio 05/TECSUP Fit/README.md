@@ -58,4 +58,5 @@ La interfaz de usuario implementa fielmente los lineamientos visuales y la palet
 ---
 
 ## Proyecto en funcionamiento
-![img.png](img.png)
+<img width="1809" height="1108" alt="image" src="https://github.com/user-attachments/assets/ac456764-2ec4-485a-9651-d97757dd447e" />
+
