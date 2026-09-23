@@ -18,6 +18,11 @@ Este README incluye el **prompt maestro** usado para pedirle a un agente de IA (
 
 ---
 
+## Programa en funcionamiento
+
+
+---
+
 ## Requerimientos funcionales
 
 1. **Autenticación de acceso (Login)** — El sistema debe permitir al usuario ingresar mediante un correo institucional y una contraseña, con opción de mostrar/ocultar la contraseña, antes de acceder al resto de la aplicación.
