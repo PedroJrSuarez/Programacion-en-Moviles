@@ -1,5 +1,4 @@
 package com.suarez.tecsupstore
-
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
@@ -21,6 +20,10 @@ fun TarjetaProducto(nombre: String, precio: String, modifier: Modifier = Modifie
             Box {
                 IconButton(onClick = { expanded = true }) {
                     Icon(imageVector = Icons.Default.MoreVert, contentDescription = "Opciones")
+                }
+                DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+                    DropdownMenuItem(text = { Text("Ver detalle") }, onClick = { expanded = false })
+                    DropdownMenuItem(text = { Text("Compartir") }, onClick = { expanded = false })
                 }
             }
         }
