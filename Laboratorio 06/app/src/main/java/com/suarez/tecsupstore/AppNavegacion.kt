@@ -19,7 +19,7 @@ fun AppNavegacion() {
         AppDrawer(destinoActual = rutaActual, onNavegar = { destino -> rutaActual = destino.ruta; scope.launch { drawerState.close() } })
     }) {
         Scaffold(topBar = {
-            TopAppBar(title = { Text("TECSUP Store") }, navigationIcon = {
+            TopAppBar(title = { Text("TECSUP...Store") }, navigationIcon = {
                 IconButton(onClick = { scope.launch { if (drawerState.isClosed) drawerState.open() else drawerState.close() } }) { Icon(Icons.Default.Menu, null) }
             })
         }) { padding -> Surface(modifier = Modifier.padding(padding)) { PantallaInicio() } }
