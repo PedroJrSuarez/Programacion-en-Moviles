@@ -3,10 +3,10 @@ plugins {
     id("org.jetbrains.kotlin.android")
 }
 android {
-    namespace = "com.saludplus.citas"
+    namespace = "com.suarez.saludplus"
     compileSdk = 34
     defaultConfig {
-        applicationId = "com.saludplus.citas"
+        applicationId = "com.suarez.saludplus"
         minSdk = 26
         targetSdk = 34
         versionCode = 1

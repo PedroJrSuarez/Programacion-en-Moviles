@@ -1,10 +1,10 @@
-# 🏥 SaludPlus Citas – App Paciente
+# SaludPlus Citas – App Paciente
 
 Aplicación móvil desarrollada en **Kotlin** utilizando **Jetpack Compose** y arquitectura modular basada en pantallas y repositorio en memoria, diseñada para facilitar la gestión de citas médicas para pacientes.
 
 ---
 
-## 🚀 Características Principales
+## Características Principales
 
 1. **Autenticación y Registro:**
    - SplashScreen de bienvenida.
@@ -33,7 +33,7 @@ Aplicación móvil desarrollada en **Kotlin** utilizando **Jetpack Compose** y a
 
 ---
 
-## 🛠️ Tecnologías y Librerías
+## Tecnologías y Librerías
 
 - **Lenguaje:** Kotlin 1.9+
 - **UI Toolkit:** Jetpack Compose (Material 3)
@@ -43,7 +43,7 @@ Aplicación móvil desarrollada en **Kotlin** utilizando **Jetpack Compose** y a
 
 ---
 
-## 📂 Estructura del Proyecto
+## Estructura del Proyecto
 
 ```text
 com.saludplus.citas/
@@ -58,7 +58,7 @@ com.saludplus.citas/
 
 ---
 
-## 🔑 Credenciales de Acceso Demo
+## Credenciales de Acceso Demo
 
 Puedes utilizar la cuenta precargada para probar la aplicación inmediatamente:
 - **Correo:** `demo@saludplus.com`
@@ -66,7 +66,7 @@ Puedes utilizar la cuenta precargada para probar la aplicación inmediatamente:
 
 ---
 
-## 📌 Historial de Commits Incrementales
+## Historial de Commits Incrementales
 
 El desarrollo del proyecto se estructuró en 8 commits incrementales y funcionales:
 
@@ -81,7 +81,7 @@ El desarrollo del proyecto se estructuró en 8 commits incrementales y funcional
 
 ---
 
-## ⚙️ Instrucciones de Ejecución
+## Instrucciones de Ejecución
 
 1. Abrir **Android Studio**.
 2. Seleccionar **File > Open** y abrir la carpeta `SaludPlusCitas`.
