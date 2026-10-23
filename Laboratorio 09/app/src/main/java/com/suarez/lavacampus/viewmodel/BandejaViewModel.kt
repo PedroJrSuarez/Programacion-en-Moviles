@@ -10,6 +10,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
+import java.time.LocalDate
 import kotlinx.coroutines.launch
 
 enum class FiltroBandeja(val texto: String, val estado: EstadoPedido?) {
@@ -37,9 +39,15 @@ class BandejaViewModel(private val repo: LavaRepository) : ViewModel() {
             }
         }.aEstado(viewModelScope, emptyList())
 
+    /** Ids de pedidos atrasados: la View solo los muestra en rojo */
+    val idsAtrasados: StateFlow<Set<Int>> = repo.observarIdsAtrasados(LocalDate.now().toString())
+        .map { it.toSet() }
+        .aEstado(viewModelScope, emptySet())
+
     fun elegirFiltro(f: FiltroBandeja) { _filtro.value = f }
     fun buscar(texto: String) { _busqueda.value = texto }
 
+    /** RECIBIDO -> EN_PROCESO no necesita condiciones; LISTO y ENTREGADO se gestionan en la pantalla de gestión */
     fun iniciar(p: PedidoConDetalle) {
         if (p.estadoEnum() != EstadoPedido.RECIBIDO) return
         viewModelScope.launch { repo.cambiarEstado(p.pedido.id, EstadoPedido.EN_PROCESO, null) }

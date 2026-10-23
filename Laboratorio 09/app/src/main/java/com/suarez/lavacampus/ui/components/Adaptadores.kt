@@ -1,6 +1,14 @@
 package com.suarez.lavacampus.ui.components
 
+// ============================================================================
+//  ADAPTADORES: única capa que toca la API de los componentes (ui/components)
+//  (LavaTheme, LavaTextField, LavaButton, EstadoPedidoChip, PedidoCard,
+//  StepperEstado, IconoServicio, SelectorCantidad, GraficoDona, GraficoBarras,
+//  SplashScreen). Si alguna firma del proyecto base es distinta, se corrige AQUÍ
+//  y el resto de pantallas no cambia. Busca los comentarios "ADAPTAR".
+// ============================================================================
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -8,6 +16,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -32,13 +41,16 @@ import com.suarez.lavacampus.ui.components.graficos.GraficoDona
 import com.suarez.lavacampus.ui.estudiante.SplashScreen
 import com.suarez.lavacampus.ui.theme.LavaTheme
 
+// ADAPTAR: LavaTheme(rol, darkTheme, content)
 @Composable
 fun TemaLava(rol: Rol, oscuro: Boolean, content: @Composable () -> Unit) =
     LavaTheme(rol = rol, darkTheme = oscuro, content = content)
 
+// ADAPTAR: SplashScreen(onFinish)
 @Composable
 fun PantallaSplash(onFin: () -> Unit) = SplashScreen(onFinish = onFin)
 
+// ADAPTAR: LavaTextField(value, onValueChange, label, modifier, isPassword)
 @Composable
 fun CampoTexto(
     valor: String, onCambio: (String) -> Unit, etiqueta: String,
@@ -46,45 +58,62 @@ fun CampoTexto(
 ) = LavaTextField(value = valor, onValueChange = onCambio, label = etiqueta,
     modifier = modifier, isPassword = esClave)
 
+// ADAPTAR: LavaButton(text, onClick, modifier, enabled)
 @Composable
 fun BotonLava(texto: String, onClick: () -> Unit, modifier: Modifier = Modifier, habilitado: Boolean = true) =
     LavaButton(text = texto, onClick = onClick, modifier = modifier, enabled = habilitado)
 
+// ADAPTAR: EstadoPedidoChip(estado)
 @Composable
 fun ChipEstado(estado: EstadoPedido) = EstadoPedidoChip(estado = estado)
 
+// ADAPTAR: StepperEstado(estado, vertical, modifier)
 @Composable
 fun Seguimiento(
     estado: EstadoPedido, vertical: Boolean, modifier: Modifier = Modifier, sobrePrimario: Boolean = false
 ) = StepperEstado(estado = estado, vertical = vertical, modifier = modifier, sobrePrimario = sobrePrimario)
 
+// ADAPTAR: IconoServicio(icono, modifier)
 @Composable
 fun IconoDeServicio(icono: String, modifier: Modifier = Modifier) =
     IconoServicio(icono = icono, modifier = modifier)
 
+// ADAPTAR: SelectorCantidad(valor, paso, minimo, maximo, onCambio)
+/** onDelta recibe +1 (más) o -1 (menos); el ViewModel aplica las reglas de la cantidad */
 @Composable
 fun SelectorDeCantidad(valor: Double, paso: Double, minimo: Double, maximo: Double, onDelta: (Int) -> Unit) =
     SelectorCantidad(valor = valor, paso = paso, minimo = minimo, maximo = maximo,
         onCambio = { nuevo -> onDelta(if (nuevo > valor) 1 else -1) })
 
+// ADAPTAR: PedidoCard(pedido, onClick, modifier)
 @Composable
 fun TarjetaPedido(
     p: PedidoConDetalle, onClick: () -> Unit, modifier: Modifier = Modifier,
+    atrasado: Boolean = false,
     extra: @Composable ColumnScope.() -> Unit = {}
 ) {
     Column(modifier) {
-        PedidoCard(pedido = p, onClick = onClick, modifier = Modifier.fillMaxWidth())
+        PedidoCard(
+            pedido = p, onClick = onClick,
+            modifier = Modifier.fillMaxWidth().then(
+                if (atrasado) Modifier.border(2.dp, MaterialTheme.colorScheme.error, RoundedCornerShape(12.dp))
+                else Modifier
+            )
+        )
         extra()
     }
 }
 
+// ADAPTAR: GraficoDona(datos, modifier) / GraficoBarras(datos, modifier)
 @Composable
 fun Dona(datos: List<DatoGrafico>, modifier: Modifier = Modifier) = GraficoDona(datos = datos, modifier = modifier)
 
 @Composable
 fun Barras(datos: List<DatoGrafico>, modifier: Modifier = Modifier) = GraficoBarras(datos = datos, modifier = modifier)
 
+// ------------------------- Utilidades propias (no dependen del base) -------------------------
 
+/** Pantalla con barra superior del color primario del rol. Insets resueltos aquí. */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PantallaBase(

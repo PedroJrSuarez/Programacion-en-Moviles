@@ -17,6 +17,7 @@ import java.time.temporal.TemporalAdjusters
 class PanelViewModel(repo: LavaRepository) : ViewModel() {
 
     private val hoy = LocalDate.now().toString()
+    // Lunes de esta semana (si hoy es domingo, el lunes anterior)
     private val inicioSemana = LocalDate.now()
         .with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY)).toString()
 
@@ -25,6 +26,10 @@ class PanelViewModel(repo: LavaRepository) : ViewModel() {
     val porRecoger: StateFlow<Int> = repo.observarCantidadPorEstado(EstadoPedido.LISTO).aEstado(viewModelScope, 0)
     val ingresosSemana: StateFlow<Double> = repo.observarIngresosDesde(inicioSemana).aEstado(viewModelScope, 0.0)
 
+    /** Cantidad de pedidos atrasados (entrega vencida y no finalizados) */
+    val atrasados: StateFlow<Int> = repo.observarIdsAtrasados(hoy).map { it.size }.aEstado(viewModelScope, 0)
+
+    // ADAPTAR: si DatoGrafico del proyecto base tiene otros nombres/tipos, ajústalo aquí
     val porEstado: StateFlow<List<DatoGrafico>> = combine(
         repo.observarCantidadPorEstado(EstadoPedido.RECIBIDO),
         repo.observarCantidadPorEstado(EstadoPedido.EN_PROCESO),

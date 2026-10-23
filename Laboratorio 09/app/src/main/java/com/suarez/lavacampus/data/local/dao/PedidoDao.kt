@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface PedidoDao {
+    // ---- Escritura ----
     @Insert
     suspend fun insertar(p: Pedido): Long
 
@@ -22,6 +23,7 @@ interface PedidoDao {
     @Query("SELECT * FROM pedidos WHERE id = :id")
     suspend fun obtener(id: Int): Pedido?
 
+    // ---- Lectura (Flow) ----
     @Transaction
     @Query("SELECT * FROM pedidos WHERE usuarioId = :usuarioId ORDER BY id DESC")
     fun observarPorUsuario(usuarioId: Int): Flow<List<PedidoConDetalle>>
@@ -34,12 +36,14 @@ interface PedidoDao {
     @Query("SELECT * FROM pedidos WHERE id = :id")
     fun observarUno(id: Int): Flow<PedidoConDetalle?>
 
+    // ---- Reglas ----
     @Query("SELECT COUNT(*) FROM pedidos WHERE usuarioId = :usuarioId AND estado IN ('RECIBIDO','EN_PROCESO','LISTO')")
     suspend fun contarActivos(usuarioId: Int): Int
 
     @Query("SELECT casillero FROM pedidos WHERE estado = 'LISTO' AND casillero IS NOT NULL")
     fun observarCasillerosOcupados(): Flow<List<String>>
 
+    // ---- Panel ----
     @Query("SELECT COUNT(*) FROM pedidos WHERE fechaRegistro = :fecha AND estado != 'CANCELADO'")
     fun contarPorFecha(fecha: String): Flow<Int>
 
@@ -48,4 +52,8 @@ interface PedidoDao {
 
     @Query("SELECT COALESCE(SUM(total), 0.0) FROM pedidos WHERE pagado = 1 AND fechaRegistro >= :fechaInicio")
     fun ingresosDesde(fechaInicio: String): Flow<Double>
+
+    // ---- Pedidos atrasados: fecha de entrega ya pasó y no están entregados ni cancelados ----
+    @Query("SELECT id FROM pedidos WHERE fechaEntrega < :hoy AND estado NOT IN ('ENTREGADO','CANCELADO')")
+    fun observarIdsAtrasados(hoy: String): Flow<List<Int>>
 }

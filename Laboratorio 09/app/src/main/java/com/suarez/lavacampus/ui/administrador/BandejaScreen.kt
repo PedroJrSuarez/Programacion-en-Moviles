@@ -10,6 +10,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.suarez.lavacampus.model.EstadoPedido
 import com.suarez.lavacampus.model.estadoEnum
@@ -24,6 +25,7 @@ fun BandejaScreen(vm: BandejaViewModel, onAbrir: (Int) -> Unit) {
     val pedidos by vm.pedidos.collectAsState()
     val filtro by vm.filtro.collectAsState()
     val busqueda by vm.busqueda.collectAsState()
+    val atrasados by vm.idsAtrasados.collectAsState()
 
     PantallaBase("Pedidos") { pad ->
         Column(Modifier.padding(pad).fillMaxSize()) {
@@ -43,7 +45,17 @@ fun BandejaScreen(vm: BandejaViewModel, onAbrir: (Int) -> Unit) {
             LazyColumn(contentPadding = PaddingValues(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 items(pedidos, key = { it.pedido.id }) { p ->
                     val estado = p.estadoEnum()
-                    TarjetaPedido(p, onClick = { onAbrir(p.pedido.id) }) {
+                    val atrasado = p.pedido.id in atrasados
+                    TarjetaPedido(p, onClick = { onAbrir(p.pedido.id) }, atrasado = atrasado) {
+                        if (atrasado) {
+                            Text(
+                                "ATRASADO: debía entregarse el ${p.pedido.fechaEntrega}",
+                                Modifier.padding(top = 4.dp),
+                                color = MaterialTheme.colorScheme.error,
+                                style = MaterialTheme.typography.labelMedium,
+                                fontWeight = FontWeight.Bold
+                            )
+                        }
                         Row(Modifier.fillMaxWidth().padding(top = 4.dp), verticalAlignment = Alignment.CenterVertically) {
                             Column(Modifier.weight(1f)) {
                                 Text(p.usuario.nombre, style = MaterialTheme.typography.bodyMedium)

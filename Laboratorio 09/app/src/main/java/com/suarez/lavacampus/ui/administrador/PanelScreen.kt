@@ -26,6 +26,7 @@ fun PanelScreen(vm: PanelViewModel, onVerListos: () -> Unit) {
     val ingresos by vm.ingresosSemana.collectAsState()
     val porEstado by vm.porEstado.collectAsState()
     val porServicio by vm.porServicio.collectAsState()
+    val atrasados by vm.atrasados.collectAsState()
 
     PantallaBase("Panel") { pad ->
         Column(
@@ -63,6 +64,19 @@ fun PanelScreen(vm: PanelViewModel, onVerListos: () -> Unit) {
                     Text("Ingresos por servicio", fontWeight = FontWeight.Bold)
                     if (porServicio.isEmpty()) Text("Sin ingresos esta semana")
                     else Barras(porServicio, Modifier.fillMaxWidth().height(200.dp))
+                }
+            }
+
+            if (atrasados > 0) {
+                Card(
+                    Modifier.fillMaxWidth(),
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.errorContainer)
+                ) {
+                    Row(Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
+                        Text("Hay $atrasados pedido(s) atrasado(s)", Modifier.weight(1f),
+                            fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onErrorContainer)
+                        Button(onClick = onVerListos) { Text("Ver") }
+                    }
                 }
             }
 
