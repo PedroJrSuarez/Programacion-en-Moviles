@@ -46,9 +46,9 @@ DataStore (solo preferencias) ──► ViewModel
 ## Capturas
 | Estudiante | Administrador |
 |---|---|
-| ![Inicio](capturas/est_inicio.png) | ![Panel](capturas/adm_panel.png) |
-| ![Nuevo pedido](capturas/est_nuevo.png) | ![Bandeja](capturas/adm_bandeja.png) |
-| ![Detalle](capturas/est_detalle.png) | ![Gestión](capturas/adm_gestion.png) |
+| ![Inicio]![img.png](img.png) | ![Panel]![img_3.png](img_3.png) |
+| ![Nuevo pedido]![img_1.png](img_1.png) | ![Bandeja]![img_4.png](img_4.png) |
+| ![Detalle]![img_2.png](img_2.png) | ![Gestión]![img_5.png](img_5.png) |
 
 ## Decisiones de diseño
 - Se agregaron 2 funciones al contrato `LavaRepository` (`obtenerUsuario`, `usuarioPorRol`) para poder **restaurar la sesión guardada** (Splash) y **cambiar de perfil** sin credenciales fijas.
