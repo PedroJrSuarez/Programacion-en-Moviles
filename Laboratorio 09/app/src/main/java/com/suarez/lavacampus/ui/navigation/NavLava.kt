@@ -76,13 +76,16 @@ object Destinos {
     const val LOGIN = "login"
     const val G_EST = "grafo_estudiante"
     const val G_ADM = "grafo_admin"
+    // Estudiante
     const val INICIO = "inicio"
     const val PEDIDOS = "pedidos"
     const val TARIFAS = "tarifas"
     const val PERFIL = "perfil"
-    const val NUEVO = "nuevo_pedido"
+    const val NUEVO = "nuevo_pedido?repetir={repetir}"
+    fun nuevo(repetir: Int = 0) = "nuevo_pedido?repetir=$repetir"
     const val DETALLE = "detalle/{id}"
     fun detalle(id: Int) = "detalle/$id"
+    // Administrador
     const val PANEL = "panel"
     const val BANDEJA = "bandeja"
     const val SERVICIOS = "servicios"
@@ -141,6 +144,7 @@ fun NavLava() {
             else -> emptyList()
         }
 
+        // Splash -> Login / Inicio / Panel; también reacciona a login, cerrar sesión y cambio de perfil
         LaunchedEffect(usuario?.id, usuario?.rol, restaurado, splashListo) {
             if (!restaurado || !splashListo) return@LaunchedEffect
             val destino = when (usuario?.rol) {
@@ -183,7 +187,7 @@ fun NavLava() {
                         val vm = vmDe("inicio${u.id}") { InicioViewModel(repo, u) }
                         InicioScreen(
                             vm, u,
-                            onNuevoPedido = { nav.navigate(Destinos.NUEVO) },
+                            onNuevoPedido = { nav.navigate(Destinos.nuevo()) },
                             onMisPedidos = { nav.irATab(Destinos.PEDIDOS, Destinos.INICIO) },
                             onTarifas = { nav.irATab(Destinos.TARIFAS, Destinos.INICIO) },
                             onDetalle = { nav.navigate(Destinos.detalle(it)) }
@@ -193,7 +197,8 @@ fun NavLava() {
                         val u = usuario ?: return@composable
                         val vm = vmDe("mis${u.id}") { MisPedidosViewModel(repo, u.id) }
                         MisPedidosScreen(vm, onDetalle = { nav.navigate(Destinos.detalle(it)) },
-                            onNuevoPedido = { nav.navigate(Destinos.NUEVO) })
+                            onNuevoPedido = { nav.navigate(Destinos.nuevo()) },
+                            onRepetir = { nav.navigate(Destinos.nuevo(it)) })
                     }
                     composable(Destinos.TARIFAS) {
                         val vm = vmDe("tarifas") { ServiciosViewModel(repo) }
@@ -204,9 +209,13 @@ fun NavLava() {
                         val vm = vmDe("mis${u.id}") { MisPedidosViewModel(repo, u.id) }
                         PerfilScreen(sesion, vm, u)
                     }
-                    composable(Destinos.NUEVO) {
+                    composable(
+                        Destinos.NUEVO,
+                        arguments = listOf(navArgument("repetir") { type = NavType.IntType; defaultValue = 0 })
+                    ) { e ->
                         val u = usuario ?: return@composable
-                        val vm = vmDe("nuevo${u.id}") { NuevoPedidoViewModel(repo, app.preferencias, u) }
+                        val repetir = e.arguments?.getInt("repetir") ?: 0
+                        val vm = vmDe("nuevo${u.id}_$repetir") { NuevoPedidoViewModel(repo, app.preferencias, u, repetir) }
                         NuevoPedidoScreen(
                             vm, onVolver = { nav.popBackStack() },
                             onCreado = {

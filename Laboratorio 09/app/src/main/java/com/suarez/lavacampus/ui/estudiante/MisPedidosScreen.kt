@@ -17,7 +17,12 @@ import com.suarez.lavacampus.ui.components.TarjetaPedido
 import com.suarez.lavacampus.viewmodel.MisPedidosViewModel
 
 @Composable
-fun MisPedidosScreen(vm: MisPedidosViewModel, onDetalle: (Int) -> Unit, onNuevoPedido: () -> Unit) {
+fun MisPedidosScreen(
+    vm: MisPedidosViewModel,
+    onDetalle: (Int) -> Unit,
+    onNuevoPedido: () -> Unit,
+    onRepetir: (Int) -> Unit
+) {
     val activos by vm.activos.collectAsState()
     val historial by vm.historial.collectAsState()
     var tab by remember { mutableIntStateOf(0) }
@@ -52,6 +57,9 @@ fun MisPedidosScreen(vm: MisPedidosViewModel, onDetalle: (Int) -> Unit, onNuevoP
                                 Text("Recógelo en el casillero ${p.pedido.casillero}", Modifier.padding(12.dp),
                                     color = EstadoPedido.LISTO.color, fontWeight = FontWeight.Bold)
                             }
+                        }
+                        if (tab == 1) {
+                            TextButton(onClick = { onRepetir(p.pedido.id) }) { Text("Pedir de nuevo") }
                         }
                         if (p.estadoEnum() == EstadoPedido.RECIBIDO) {
                             TextButton(onClick = { vm.cancelar(p) }) {

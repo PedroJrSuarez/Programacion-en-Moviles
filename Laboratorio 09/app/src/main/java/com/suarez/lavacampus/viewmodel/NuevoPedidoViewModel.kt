@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
@@ -20,7 +21,8 @@ data class LineaResumen(val servicio: Servicio, val cantidad: Double, val subtot
 class NuevoPedidoViewModel(
     private val repo: LavaRepository,
     prefs: PreferenciasStore,
-    private val usuario: Usuario
+    private val usuario: Usuario,
+    private val repetirPedidoId: Int = 0     // > 0: precarga las líneas de un pedido anterior
 ) : ViewModel() {
 
     companion object {
@@ -72,6 +74,32 @@ class NuevoPedidoViewModel(
     val puedeConfirmar: StateFlow<Boolean> = combine(resumen, recibiendoPedidos) { l, recibe ->
         l.isNotEmpty() && recibe
     }.aEstado(viewModelScope, false)
+
+    init {
+        if (repetirPedidoId > 0) cargarPedidoAnterior(repetirPedidoId)
+    }
+
+    /** Carga las mismas líneas del pedido anterior; los precios son los ACTUALES (se calculan con los servicios vigentes) */
+    private fun cargarPedidoAnterior(id: Int) {
+        viewModelScope.launch {
+            val anterior = repo.observarPedido(id).first() ?: return@launch
+            if (anterior.pedido.usuarioId != usuario.id) return@launch      // solo pedidos propios
+            val activos = repo.observarServiciosActivos().first().associateBy { it.id }
+            val nuevas = mutableMapOf<Int, Double>()
+            var omitidos = 0
+            anterior.detalles.forEach { d ->
+                val s = activos[d.servicio.id]
+                if (s == null) omitidos++ else nuevas[s.id] = ajustarCantidad(s, d.detalle.cantidad)
+            }
+            _cantidades.value = nuevas
+            _mensaje.value = if (omitidos > 0) "Algunos servicios ya no están disponibles y no se agregaron" else null
+        }
+    }
+
+    /** Respeta las reglas: KG de 1.0 a 10.0 en pasos de 0.5; PRENDA/UNIDAD enteros de 1 a 30 */
+    private fun ajustarCantidad(s: Servicio, c: Double): Double =
+        if (s.unidad == "KG") (Math.round(c * 2) / 2.0).coerceIn(1.0, 10.0)
+        else c.toInt().toDouble().coerceIn(1.0, 30.0)
 
     fun cambiarNota(texto: String) { _nota.value = texto }
 
