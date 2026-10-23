@@ -68,6 +68,17 @@ fun DetallePedidoScreen(vm: DetallePedidoViewModel, onVolver: () -> Unit) {
                             }
                         }
                         HorizontalDivider()
+                        if (p.descuento > 0.0) {
+                            Row(Modifier.fillMaxWidth()) {
+                                Text("Subtotal", Modifier.weight(1f))
+                                Text((p.total + p.descuento).soles())
+                            }
+                            Row(Modifier.fillMaxWidth()) {
+                                Text("Descuento por volumen", Modifier.weight(1f),
+                                    color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold)
+                                Text("-" + p.descuento.soles(), color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold)
+                            }
+                        }
                         Row(Modifier.fillMaxWidth()) {
                             Text("Total", Modifier.weight(1f), fontWeight = FontWeight.Bold)
                             Text(p.total.soles(), fontWeight = FontWeight.Bold)

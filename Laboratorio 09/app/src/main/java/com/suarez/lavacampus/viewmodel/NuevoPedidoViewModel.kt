@@ -25,6 +25,8 @@ class NuevoPedidoViewModel(
 
     companion object {
         const val MAX_ACTIVOS = 3
+        const val UMBRAL_KG = 5.0          // el lavado por encima de 5 kg tiene descuento
+        const val PORC_DESCUENTO = 0.10    // 10 %
     }
 
     val servicios: StateFlow<List<Servicio>> = repo.observarServiciosActivos()
@@ -41,6 +43,7 @@ class NuevoPedidoViewModel(
 
     val recibiendoPedidos: StateFlow<Boolean> = prefs.recibirPedidos.aEstado(viewModelScope, true)
 
+    /** Una línea por servicio elegido, con su subtotal */
     val resumen: StateFlow<List<LineaResumen>> = combine(servicios, cantidades) { lista, cant ->
         lista.mapNotNull { s ->
             val c = cant[s.id] ?: 0.0
@@ -48,8 +51,20 @@ class NuevoPedidoViewModel(
         }
     }.aEstado(viewModelScope, emptyList())
 
-    val total: StateFlow<Double> = resumen.map { l -> l.sumOf { it.subtotal } }.aEstado(viewModelScope, 0.0)
+    /** Suma de cantidad x precio, sin descuento */
+    val subtotal: StateFlow<Double> = resumen.map { l -> l.sumOf { it.subtotal } }.aEstado(viewModelScope, 0.0)
 
+    /** 10 % sobre las líneas por KG con más de 5 kg (redondeado a 2 decimales) */
+    val descuento: StateFlow<Double> = resumen.map { l ->
+        val d = l.filter { it.servicio.unidad == "KG" && it.cantidad > UMBRAL_KG }
+            .sumOf { it.subtotal * PORC_DESCUENTO }
+        Math.round(d * 100) / 100.0
+    }.aEstado(viewModelScope, 0.0)
+
+    /** Total final = subtotal - descuento */
+    val total: StateFlow<Double> = combine(subtotal, descuento) { s, d -> s - d }.aEstado(viewModelScope, 0.0)
+
+    /** Texto aaaa-MM-dd o null si aún no hay servicios elegidos */
     val fechaEntrega: StateFlow<String?> = resumen.map { l ->
         if (l.isEmpty()) null else calcularFechaEntrega(l.maxOf { it.servicio.horasEntrega }).toString()
     }.aEstado(viewModelScope, null)
@@ -96,7 +111,8 @@ class NuevoPedidoViewModel(
                 usuarioId = usuario.id,
                 lineas = lineas.map { LineaPedido(it.servicio.id, it.cantidad) },
                 fechaEntrega = fecha,
-                nota = _nota.value.trim()
+                nota = _nota.value.trim(),
+                descuento = descuento.value
             )
             onCreado()
         }

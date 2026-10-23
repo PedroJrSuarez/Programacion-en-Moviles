@@ -43,7 +43,7 @@ class LavaRepositoryRoom(private val db: LavaDatabase) : LavaRepository {
 
     // ---------- Pedidos ----------
     override suspend fun crearPedido(
-        usuarioId: Int, lineas: List<LineaPedido>, fechaEntrega: String, nota: String
+        usuarioId: Int, lineas: List<LineaPedido>, fechaEntrega: String, nota: String, descuento: Double
     ): Long = db.withTransaction {
         // 1) Copiamos el precio vigente de cada servicio (precio congelado)
         val items = lineas.map { l ->
@@ -51,7 +51,8 @@ class LavaRepositoryRoom(private val db: LavaDatabase) : LavaRepository {
                 ?: throw IllegalStateException("El servicio ${l.servicioId} no existe")
             Triple(s, l.cantidad, s.precio * l.cantidad)
         }
-        val total = items.sumOf { it.third }
+        val bruto = items.sumOf { it.third }
+        val desc = descuento.coerceIn(0.0, bruto)     // el descuento nunca supera el subtotal
 
         // 2) Pedido
         val pedidoId = pedidoDao.insertar(
@@ -60,7 +61,8 @@ class LavaRepositoryRoom(private val db: LavaDatabase) : LavaRepository {
                 fechaRegistro = LocalDate.now().toString(),
                 fechaEntrega = fechaEntrega,
                 estado = EstadoPedido.RECIBIDO.name,
-                total = total,
+                total = bruto - desc,
+                descuento = desc,
                 pagado = false,
                 nota = nota
             )

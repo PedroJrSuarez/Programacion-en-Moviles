@@ -15,9 +15,11 @@ interface DetalleDao {
     @Query("SELECT COUNT(*) FROM detalles_pedido WHERE servicioId = :servicioId")
     suspend fun contarPorServicio(servicioId: Int): Int
 
+    // Ingreso NETO por servicio: el subtotal se prorratea con el descuento del pedido (total / (total + descuento))
+    // OJO: alias deben coincidir con model/IngresoServicio (nombre, total)
     @Query(
         """
-        SELECT s.nombre AS nombre, SUM(d.subtotal) AS total
+        SELECT s.nombre AS nombre, SUM(d.subtotal * p.total / (p.total + p.descuento)) AS total
         FROM detalles_pedido d
         INNER JOIN servicios s ON d.servicioId = s.id
         INNER JOIN pedidos p ON d.pedidoId = p.id
