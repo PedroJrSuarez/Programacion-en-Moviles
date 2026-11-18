@@ -1,5 +1,6 @@
 package com.tecsup.campusgps.ui
 
+import android.annotation.SuppressLint
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.key
@@ -11,6 +12,8 @@ import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.Circle
+import com.google.maps.android.compose.MapProperties
+import com.google.maps.android.compose.MapUiSettings
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.rememberCameraPositionState
 import com.google.maps.android.compose.rememberMarkerState
@@ -18,13 +21,15 @@ import com.tecsup.campusgps.model.LugarConDistancia
 import com.tecsup.campusgps.model.UbicacionUi
 
 @Composable
+@SuppressLint("MissingPermission")
 fun MapaUbicacion(
     estado: UbicacionUi,
     lugares: List<LugarConDistancia>,
     seleccionado: Int?,
     modifier: Modifier = Modifier,
     masCercanoId: Int? = null,
-    radioMetros: Int? = null
+    radioMetros: Int? = null,
+    miUbicacionHabilitada: Boolean = false
 ) {
     val camara = rememberCameraPositionState {
         position = CameraPosition.fromLatLngZoom(LatLng(-12.0464, -77.0428), 12f)
@@ -49,16 +54,20 @@ fun MapaUbicacion(
         )
     }
 
-    GoogleMap(modifier = modifier, cameraPositionState = camara) {
-        // Paso 3: marcador propio (rojo por defecto)
+    GoogleMap(
+        modifier = modifier,
+        cameraPositionState = camara,
+        properties = MapProperties(isMyLocationEnabled = miUbicacionHabilitada),
+        uiSettings = MapUiSettings(myLocationButtonEnabled = miUbicacionHabilitada)
+    ) {
         if (estado is UbicacionUi.Lista) {
             val centro = LatLng(estado.posicion.latitud, estado.posicion.longitud)
-            Marker(
-                state = rememberMarkerState(
-                    position = centro
-                ),
-                title = "Estás aquí"
-            )
+            if (!miUbicacionHabilitada) {
+                Marker(
+                    state = rememberMarkerState(position = centro),
+                    title = "Estás aquí"
+                )
+            }
             if (radioMetros != null) {
                 Circle(
                     center = centro,

@@ -9,6 +9,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -53,6 +54,12 @@ fun PantallaMapa(vm: MapaViewModel) {
         if (concedido) vm.buscar() else lanzador.launch(arrayOf(fine, coarse))
     }
 
+    fun tienePermiso() = listOf(fine, coarse).any {
+        ContextCompat.checkSelfPermission(contexto, it) == PackageManager.PERMISSION_GRANTED
+    }
+
+    val miUbicacionHabilitada = remember(estado) { tienePermiso() }
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -87,6 +94,7 @@ fun PantallaMapa(vm: MapaViewModel) {
                     seleccionado = seleccionado,
                     masCercanoId = masCercano?.id,
                     radioMetros = radio,
+                    miUbicacionHabilitada = miUbicacionHabilitada,
                     modifier = Modifier.weight(1f).fillMaxWidth()
                 )
                 Spacer(Modifier.height(8.dp))
