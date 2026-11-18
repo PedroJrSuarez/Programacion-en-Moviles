@@ -22,7 +22,6 @@ ViewModel --> LugaresRepository   ---> LugaresRepositoryLocal (5 lugares fijos)
 
 ## Capturas
 ![img.png](img.png)
-
 ## Para pensar
 
 1. **¿Por qué FusedLocationProviderClient está en el Repository y no en el ViewModel?**
