@@ -1,12 +1,12 @@
-#Wed Nov 18 07:46:36 COT 2026
-base.0=C\:\\Users\\Pedro\\Downloads\\CampusGPS_fase1\\CampusGPS\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes.dex
-base.1=C\:\\Users\\Pedro\\Downloads\\CampusGPS_fase1\\CampusGPS\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\0\\classes.dex
-base.2=C\:\\Users\\Pedro\\Downloads\\CampusGPS_fase1\\CampusGPS\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\12\\classes.dex
-base.3=C\:\\Users\\Pedro\\Downloads\\CampusGPS_fase1\\CampusGPS\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\14\\classes.dex
-base.4=C\:\\Users\\Pedro\\Downloads\\CampusGPS_fase1\\CampusGPS\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\2\\classes.dex
-base.5=C\:\\Users\\Pedro\\Downloads\\CampusGPS_fase1\\CampusGPS\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\5\\classes.dex
-base.6=C\:\\Users\\Pedro\\Downloads\\CampusGPS_fase1\\CampusGPS\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\8\\classes.dex
-base.7=C\:\\Users\\Pedro\\Downloads\\CampusGPS_fase1\\CampusGPS\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes2.dex
+#Wed Nov 18 12:39:28 COT 2026
+base.0=C\:\\Users\\Pedro\\Downloads\\CampusGPS_fase1\\CampusGPS\\Laboratorio 13\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes.dex
+base.1=C\:\\Users\\Pedro\\Downloads\\CampusGPS_fase1\\CampusGPS\\Laboratorio 13\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\0\\classes.dex
+base.2=C\:\\Users\\Pedro\\Downloads\\CampusGPS_fase1\\CampusGPS\\Laboratorio 13\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\12\\classes.dex
+base.3=C\:\\Users\\Pedro\\Downloads\\CampusGPS_fase1\\CampusGPS\\Laboratorio 13\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\14\\classes.dex
+base.4=C\:\\Users\\Pedro\\Downloads\\CampusGPS_fase1\\CampusGPS\\Laboratorio 13\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\2\\classes.dex
+base.5=C\:\\Users\\Pedro\\Downloads\\CampusGPS_fase1\\CampusGPS\\Laboratorio 13\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\5\\classes.dex
+base.6=C\:\\Users\\Pedro\\Downloads\\CampusGPS_fase1\\CampusGPS\\Laboratorio 13\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\8\\classes.dex
+base.7=C\:\\Users\\Pedro\\Downloads\\CampusGPS_fase1\\CampusGPS\\Laboratorio 13\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes2.dex
 path.0=classes.dex
 path.1=0/classes.dex
 path.2=12/classes.dex

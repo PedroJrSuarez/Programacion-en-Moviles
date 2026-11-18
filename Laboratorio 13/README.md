@@ -21,11 +21,7 @@ ViewModel --> LugaresRepository   ---> LugaresRepositoryLocal (5 lugares fijos)
 ```
 
 ## Capturas
-1. Permiso: `capturas/01-permiso.png`
-2. Mapa con tu ubicación: `capturas/02-mapa.png`
-3. Marcadores del campus: `capturas/03-marcadores.png`
-4. Lista ordenada por distancia: `capturas/04-lista.png`
-5. Manejo de errores: `capturas/05-error.png`
+![img.png](img.png)
 
 ## Para pensar
 

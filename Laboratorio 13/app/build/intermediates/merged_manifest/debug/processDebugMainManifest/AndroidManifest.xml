@@ -41,7 +41,7 @@
         android:testOnly="true" >
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="TU_CLAVE_AQUI" />
+            android:value="" />
 
         <activity
             android:name="com.tecsup.campusgps.MainActivity"

@@ -9,14 +9,14 @@
 9        android:targetSdkVersion="35" />
 10
 11    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-11-->C:\Users\Pedro\Downloads\CampusGPS_fase1\CampusGPS\app\src\main\AndroidManifest.xml:4:5-81
-11-->C:\Users\Pedro\Downloads\CampusGPS_fase1\CampusGPS\app\src\main\AndroidManifest.xml:4:22-78
+11-->C:\Users\Pedro\Downloads\CampusGPS_fase1\CampusGPS\Laboratorio 13\app\src\main\AndroidManifest.xml:4:5-81
+11-->C:\Users\Pedro\Downloads\CampusGPS_fase1\CampusGPS\Laboratorio 13\app\src\main\AndroidManifest.xml:4:22-78
 12    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-12-->C:\Users\Pedro\Downloads\CampusGPS_fase1\CampusGPS\app\src\main\AndroidManifest.xml:5:5-79
-12-->C:\Users\Pedro\Downloads\CampusGPS_fase1\CampusGPS\app\src\main\AndroidManifest.xml:5:22-76
+12-->C:\Users\Pedro\Downloads\CampusGPS_fase1\CampusGPS\Laboratorio 13\app\src\main\AndroidManifest.xml:5:5-79
+12-->C:\Users\Pedro\Downloads\CampusGPS_fase1\CampusGPS\Laboratorio 13\app\src\main\AndroidManifest.xml:5:22-76
 13    <uses-permission android:name="android.permission.INTERNET" />
-13-->C:\Users\Pedro\Downloads\CampusGPS_fase1\CampusGPS\app\src\main\AndroidManifest.xml:6:5-67
-13-->C:\Users\Pedro\Downloads\CampusGPS_fase1\CampusGPS\app\src\main\AndroidManifest.xml:6:22-64
+13-->C:\Users\Pedro\Downloads\CampusGPS_fase1\CampusGPS\Laboratorio 13\app\src\main\AndroidManifest.xml:6:5-67
+13-->C:\Users\Pedro\Downloads\CampusGPS_fase1\CampusGPS\Laboratorio 13\app\src\main\AndroidManifest.xml:6:22-64
 14
 15    <!-- Include required permissions for Google Maps API to run. -->
 16    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -51,41 +51,41 @@
 32-->[androidx.core:core:1.15.0] C:\Users\Pedro\.gradle\caches\8.9\transforms\cd46abea9d16e862d0dfae7b2db85bca\transformed\core-1.15.0\AndroidManifest.xml:26:22-94
 33
 34    <application
-34-->C:\Users\Pedro\Downloads\CampusGPS_fase1\CampusGPS\app\src\main\AndroidManifest.xml:8:5-26:19
+34-->C:\Users\Pedro\Downloads\CampusGPS_fase1\CampusGPS\Laboratorio 13\app\src\main\AndroidManifest.xml:8:5-26:19
 35        android:allowBackup="true"
-35-->C:\Users\Pedro\Downloads\CampusGPS_fase1\CampusGPS\app\src\main\AndroidManifest.xml:9:9-35
+35-->C:\Users\Pedro\Downloads\CampusGPS_fase1\CampusGPS\Laboratorio 13\app\src\main\AndroidManifest.xml:9:9-35
 36        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
 36-->[androidx.core:core:1.15.0] C:\Users\Pedro\.gradle\caches\8.9\transforms\cd46abea9d16e862d0dfae7b2db85bca\transformed\core-1.15.0\AndroidManifest.xml:28:18-86
 37        android:debuggable="true"
 38        android:extractNativeLibs="false"
 39        android:label="CampusGPS"
-39-->C:\Users\Pedro\Downloads\CampusGPS_fase1\CampusGPS\app\src\main\AndroidManifest.xml:10:9-34
+39-->C:\Users\Pedro\Downloads\CampusGPS_fase1\CampusGPS\Laboratorio 13\app\src\main\AndroidManifest.xml:10:9-34
 40        android:supportsRtl="true"
-40-->C:\Users\Pedro\Downloads\CampusGPS_fase1\CampusGPS\app\src\main\AndroidManifest.xml:11:9-35
+40-->C:\Users\Pedro\Downloads\CampusGPS_fase1\CampusGPS\Laboratorio 13\app\src\main\AndroidManifest.xml:11:9-35
 41        android:testOnly="true" >
 42        <meta-data
 43            android:name="com.google.android.geo.API_KEY"
-43-->C:\Users\Pedro\Downloads\CampusGPS_fase1\CampusGPS\app\src\main\AndroidManifest.xml:14:13-58
-44            android:value="TU_CLAVE_AQUI" />
-44-->C:\Users\Pedro\Downloads\CampusGPS_fase1\CampusGPS\app\src\main\AndroidManifest.xml:15:13-44
+43-->C:\Users\Pedro\Downloads\CampusGPS_fase1\CampusGPS\Laboratorio 13\app\src\main\AndroidManifest.xml:14:13-58
+44            android:value="" />
+44-->C:\Users\Pedro\Downloads\CampusGPS_fase1\CampusGPS\Laboratorio 13\app\src\main\AndroidManifest.xml:15:13-44
 45
 46        <activity
-46-->C:\Users\Pedro\Downloads\CampusGPS_fase1\CampusGPS\app\src\main\AndroidManifest.xml:17:9-25:20
+46-->C:\Users\Pedro\Downloads\CampusGPS_fase1\CampusGPS\Laboratorio 13\app\src\main\AndroidManifest.xml:17:9-25:20
 47            android:name="com.tecsup.campusgps.MainActivity"
-47-->C:\Users\Pedro\Downloads\CampusGPS_fase1\CampusGPS\app\src\main\AndroidManifest.xml:18:13-41
+47-->C:\Users\Pedro\Downloads\CampusGPS_fase1\CampusGPS\Laboratorio 13\app\src\main\AndroidManifest.xml:18:13-41
 48            android:exported="true"
-48-->C:\Users\Pedro\Downloads\CampusGPS_fase1\CampusGPS\app\src\main\AndroidManifest.xml:19:13-36
+48-->C:\Users\Pedro\Downloads\CampusGPS_fase1\CampusGPS\Laboratorio 13\app\src\main\AndroidManifest.xml:19:13-36
 49            android:theme="@android:style/Theme.Material.Light.NoActionBar" >
-49-->C:\Users\Pedro\Downloads\CampusGPS_fase1\CampusGPS\app\src\main\AndroidManifest.xml:20:13-76
+49-->C:\Users\Pedro\Downloads\CampusGPS_fase1\CampusGPS\Laboratorio 13\app\src\main\AndroidManifest.xml:20:13-76
 50            <intent-filter>
-50-->C:\Users\Pedro\Downloads\CampusGPS_fase1\CampusGPS\app\src\main\AndroidManifest.xml:21:13-24:29
+50-->C:\Users\Pedro\Downloads\CampusGPS_fase1\CampusGPS\Laboratorio 13\app\src\main\AndroidManifest.xml:21:13-24:29
 51                <action android:name="android.intent.action.MAIN" />
-51-->C:\Users\Pedro\Downloads\CampusGPS_fase1\CampusGPS\app\src\main\AndroidManifest.xml:22:17-69
-51-->C:\Users\Pedro\Downloads\CampusGPS_fase1\CampusGPS\app\src\main\AndroidManifest.xml:22:25-66
+51-->C:\Users\Pedro\Downloads\CampusGPS_fase1\CampusGPS\Laboratorio 13\app\src\main\AndroidManifest.xml:22:17-69
+51-->C:\Users\Pedro\Downloads\CampusGPS_fase1\CampusGPS\Laboratorio 13\app\src\main\AndroidManifest.xml:22:25-66
 52
 53                <category android:name="android.intent.category.LAUNCHER" />
-53-->C:\Users\Pedro\Downloads\CampusGPS_fase1\CampusGPS\app\src\main\AndroidManifest.xml:23:17-77
-53-->C:\Users\Pedro\Downloads\CampusGPS_fase1\CampusGPS\app\src\main\AndroidManifest.xml:23:27-74
+53-->C:\Users\Pedro\Downloads\CampusGPS_fase1\CampusGPS\Laboratorio 13\app\src\main\AndroidManifest.xml:23:17-77
+53-->C:\Users\Pedro\Downloads\CampusGPS_fase1\CampusGPS\Laboratorio 13\app\src\main\AndroidManifest.xml:23:27-74
 54            </intent-filter>
 55        </activity>
 56        <!-- Needs to be explicitly declared on P+ -->
