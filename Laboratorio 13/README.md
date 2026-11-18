@@ -40,7 +40,8 @@ ajusta sus coordenadas a las ubicaciones reales del campus.
 - Al seleccionar un lugar en la lista, el mapa se centra en el marcador y acerca el zoom.
 
 ## Capturas
-![img.png](img.png)
+<img width="422" height="922" alt="image" src="https://github.com/user-attachments/assets/6e23299b-768d-47fc-8039-4d9b8a120b2b" />
+
 
 ## Para pensar
 1. **¿Por qué FusedLocationProviderClient está en el Repository?** Porque es una dependencia de Android/Google Play Services que necesita Context. El ViewModel solo conoce la interface, así que no depende de Android, se puede probar con un repositorio falso y se puede cambiar la fuente de ubicación sin tocarlo.
