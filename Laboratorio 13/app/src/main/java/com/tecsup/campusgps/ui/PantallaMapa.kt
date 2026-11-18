@@ -31,6 +31,8 @@ fun PantallaMapa(vm: MapaViewModel) {
     val seleccionado by vm.seleccionado.collectAsState()
     val masCercano by vm.masCercano.collectAsState()
     val categoria by vm.categoria.collectAsState()
+    val radio by vm.radio.collectAsState()
+    val idsEnRadio by vm.idsEnRadio.collectAsState()
 
     val contexto = LocalContext.current
     val fine = Manifest.permission.ACCESS_FINE_LOCATION
@@ -84,13 +86,18 @@ fun PantallaMapa(vm: MapaViewModel) {
                     lugares = lugares,
                     seleccionado = seleccionado,
                     masCercanoId = masCercano?.id,
+                    radioMetros = radio,
                     modifier = Modifier.weight(1f).fillMaxWidth()
                 )
                 Spacer(Modifier.height(8.dp))
                 FiltrosLugares(
                     categorias = vm.categorias,
                     categoriaSeleccionada = categoria,
-                    onCategoria = { vm.seleccionarCategoria(it) }
+                    onCategoria = { vm.seleccionarCategoria(it) },
+                    radios = vm.radiosDisponibles,
+                    radioSeleccionado = radio,
+                    onRadio = { vm.seleccionarRadio(it) },
+                    radioHabilitado = actual is UbicacionUi.Lista
                 )
                 botonPrincipal()
 
@@ -130,6 +137,7 @@ fun PantallaMapa(vm: MapaViewModel) {
                     seleccionado = seleccionado,
                     onClick = { vm.seleccionar(it) },
                     masCercanoId = masCercano?.id,
+                    enRadio = idsEnRadio,
                     modifier = Modifier.fillMaxWidth().height(220.dp)
                 )
             }

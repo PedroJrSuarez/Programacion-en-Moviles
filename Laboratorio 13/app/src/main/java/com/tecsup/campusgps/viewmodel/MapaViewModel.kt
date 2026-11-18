@@ -47,6 +47,19 @@ class MapaViewModel(
             if (categoria == null) lista else lista.filter { it.lugar.categoria == categoria }
         }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), _lugares.value)
 
+    val radiosDisponibles: List<Int> = listOf(100, 200, 500)
+
+    private val _radio = MutableStateFlow<Int?>(null)
+    val radio: StateFlow<Int?> = _radio.asStateFlow()
+
+    val idsEnRadio: StateFlow<Set<Int>> =
+        combine(lugaresVisibles, _radio) { lista, radio ->
+            if (radio == null) emptySet()
+            else lista.filter { (it.metros ?: Float.MAX_VALUE) <= radio }
+                .map { it.lugar.id }
+                .toSet()
+        }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptySet())
+
     // Paso 7: el primero con distancia calculada (la lista ya está ordenada)
     val masCercano: StateFlow<Lugar?> = lugaresVisibles
         .map { lista -> lista.firstOrNull { it.metros != null }?.lugar }
@@ -55,6 +68,10 @@ class MapaViewModel(
     fun seleccionarCategoria(categoria: String?) {
         _categoria.value = categoria
         _seleccionado.value = null
+    }
+
+    fun seleccionarRadio(metros: Int?) {
+        _radio.value = metros
     }
 
     fun buscar() {

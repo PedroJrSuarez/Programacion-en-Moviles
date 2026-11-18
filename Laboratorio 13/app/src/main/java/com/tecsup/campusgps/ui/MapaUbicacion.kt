@@ -4,11 +4,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.key
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.GoogleMap
+import com.google.maps.android.compose.Circle
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.rememberCameraPositionState
 import com.google.maps.android.compose.rememberMarkerState
@@ -21,7 +23,8 @@ fun MapaUbicacion(
     lugares: List<LugarConDistancia>,
     seleccionado: Int?,
     modifier: Modifier = Modifier,
-    masCercanoId: Int? = null
+    masCercanoId: Int? = null,
+    radioMetros: Int? = null
 ) {
     val camara = rememberCameraPositionState {
         position = CameraPosition.fromLatLngZoom(LatLng(-12.0464, -77.0428), 12f)
@@ -49,12 +52,22 @@ fun MapaUbicacion(
     GoogleMap(modifier = modifier, cameraPositionState = camara) {
         // Paso 3: marcador propio (rojo por defecto)
         if (estado is UbicacionUi.Lista) {
+            val centro = LatLng(estado.posicion.latitud, estado.posicion.longitud)
             Marker(
                 state = rememberMarkerState(
-                    position = LatLng(estado.posicion.latitud, estado.posicion.longitud)
+                    position = centro
                 ),
                 title = "Estás aquí"
             )
+            if (radioMetros != null) {
+                Circle(
+                    center = centro,
+                    radius = radioMetros.toDouble(),
+                    strokeColor = Color(0xFF1E88E5),
+                    strokeWidth = 3f,
+                    fillColor = Color(0x331E88E5)
+                )
+            }
         }
         // Pasos 4 y 7: un marcador por lugar; el más cercano en verde
         lugares.forEach { item ->

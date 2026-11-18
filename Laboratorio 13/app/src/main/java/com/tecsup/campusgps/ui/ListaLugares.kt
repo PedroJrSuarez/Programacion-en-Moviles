@@ -24,7 +24,8 @@ fun ListaLugares(
     seleccionado: Int?,
     onClick: (Int) -> Unit,
     modifier: Modifier = Modifier,
-    masCercanoId: Int? = null
+    masCercanoId: Int? = null,
+    enRadio: Set<Int> = emptySet()
 ) {
     LazyColumn(
         modifier = modifier,
@@ -55,6 +56,14 @@ fun ListaLugares(
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
+                    }
+                    if (item.lugar.id in enRadio) {
+                        Text(
+                            "✓ en radio",
+                            style = MaterialTheme.typography.labelSmall,
+                            color = Color(0xFF2E7D32)
+                        )
+                        Spacer(Modifier.width(8.dp))
                     }
                     Text(
                         text = item.metros?.let { formatearDistancia(it) } ?: "Sin calcular",
