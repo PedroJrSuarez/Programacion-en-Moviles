@@ -20,6 +20,13 @@ ViewModel --> UbicacionRepository ---> UbicacionRepositoryGoogle (FusedLocationP
 ViewModel --> LugaresRepository   ---> LugaresRepositoryLocal (5 lugares fijos)
 ```
 
+## Mejoras de Fase 2 con IA
+
+- Filtrado de lugares por categoria, aplicado en el ViewModel y compartido por el mapa y la lista.
+- Seleccion de radios de 100, 200 o 500 m alrededor de la ubicacion; los lugares cercanos se
+  identifican en la lista.
+- Punto azul y boton nativos de ubicacion de Google Maps, habilitados solo cuando hay permiso.
+
 ## Capturas
 ![img.png](img.png)
 ## Para pensar
