@@ -27,9 +27,10 @@ import java.util.Locale
 @Composable
 fun PantallaMapa(vm: MapaViewModel) {
     val estado by vm.estado.collectAsState()
-    val lugares by vm.lugares.collectAsState()
+    val lugares by vm.lugaresVisibles.collectAsState()
     val seleccionado by vm.seleccionado.collectAsState()
     val masCercano by vm.masCercano.collectAsState()
+    val categoria by vm.categoria.collectAsState()
 
     val contexto = LocalContext.current
     val fine = Manifest.permission.ACCESS_FINE_LOCATION
@@ -86,6 +87,11 @@ fun PantallaMapa(vm: MapaViewModel) {
                     modifier = Modifier.weight(1f).fillMaxWidth()
                 )
                 Spacer(Modifier.height(8.dp))
+                FiltrosLugares(
+                    categorias = vm.categorias,
+                    categoriaSeleccionada = categoria,
+                    onCategoria = { vm.seleccionarCategoria(it) }
+                )
                 botonPrincipal()
 
                 when (actual) {
