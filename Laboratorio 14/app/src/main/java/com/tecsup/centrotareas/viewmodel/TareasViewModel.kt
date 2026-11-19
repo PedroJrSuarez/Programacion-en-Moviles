@@ -20,6 +20,7 @@ import kotlinx.coroutines.withContext
 
 class TareasViewModel(private val repo: TareasRepository) : ViewModel() {
 
+    // ----- Tarea con progreso (pasos 2 a 4)
     private val _mensaje = MutableStateFlow("Listo")
     val mensaje: StateFlow<String> = _mensaje.asStateFlow()
 
@@ -32,18 +33,21 @@ class TareasViewModel(private val repo: TareasRepository) : ViewModel() {
     private var trabajo: Job? = null
 
     fun tareaLarga() {
-        if (trabajo?.isActive == true) return
+        if (trabajo?.isActive == true) return // evita doble inicio
         trabajo = viewModelScope.launch {
             _corriendo.value = true
             try {
                 _progreso.value = 0f
                 _mensaje.value = "Trabajando..."
+                Log.d("HILO", "Antes: ${Thread.currentThread().name}")
                 withContext(Dispatchers.Default) {
+                    Log.d("HILO", "Dentro: ${Thread.currentThread().name}")
                     for (i in 1..100) {
                         delay(40)
                         _progreso.value = i / 100f
                     }
                 }
+                Log.d("HILO", "Despues: ${Thread.currentThread().name}")
                 _mensaje.value = "Terminó"
             } finally {
                 _corriendo.value = false
@@ -57,6 +61,7 @@ class TareasViewModel(private val repo: TareasRepository) : ViewModel() {
         _mensaje.value = "Cancelado"
     }
 
+    // ----- Contar primos (paso 5)
     private val _primos = MutableStateFlow<PrimosUi>(PrimosUi.Inicial)
     val primos: StateFlow<PrimosUi> = _primos.asStateFlow()
 
@@ -81,19 +86,27 @@ class TareasViewModel(private val repo: TareasRepository) : ViewModel() {
         trabajoPrimos?.cancel()
     }
 
+    // ----- Dos cargas (pasos 6 y 7)
     private val _carga = MutableStateFlow<CargaUi>(CargaUi.Inicial)
     val carga: StateFlow<CargaUi> = _carga.asStateFlow()
 
+    private val _simularError = MutableStateFlow(false)
+    val simularError: StateFlow<Boolean> = _simularError.asStateFlow()
+
+    fun cambiarSimularError(valor: Boolean) {
+        _simularError.value = valor
+    }
+
     fun cargarUnaPorUna() = cargar("Una por una") {
         val perfil = repo.cargarPerfil()
-        val pedidos = repo.cargarPedidos(false)
+        val pedidos = repo.cargarPedidos(_simularError.value)
         Pair(perfil, pedidos)
     }
 
     fun cargarALaVez() = cargar("A la vez") {
         coroutineScope {
             val a = async { repo.cargarPerfil() }
-            val b = async { repo.cargarPedidos(false) }
+            val b = async { repo.cargarPedidos(_simularError.value) }
             Pair(a.await(), b.await())
         }
     }
