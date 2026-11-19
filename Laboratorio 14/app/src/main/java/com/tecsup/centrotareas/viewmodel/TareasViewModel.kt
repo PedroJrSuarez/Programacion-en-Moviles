@@ -83,6 +83,36 @@ class TareasViewModel(private val repo: TareasRepository) : ViewModel() {
 
     private val _carga = MutableStateFlow<CargaUi>(CargaUi.Inicial)
     val carga: StateFlow<CargaUi> = _carga.asStateFlow()
-    // TODO Paso 6: fun cargarUnaPorUna() y cargarALaVez()
-    // TODO Paso 7: simularError y manejo de errores
+
+    fun cargarUnaPorUna() = cargar("Una por una") {
+        val perfil = repo.cargarPerfil()
+        val pedidos = repo.cargarPedidos(false)
+        Pair(perfil, pedidos)
+    }
+
+    fun cargarALaVez() = cargar("A la vez") {
+        coroutineScope {
+            val a = async { repo.cargarPerfil() }
+            val b = async { repo.cargarPedidos(false) }
+            Pair(a.await(), b.await())
+        }
+    }
+
+    private fun cargar(modo: String, bloque: suspend () -> Pair<String, List<String>>) {
+        if (_carga.value is CargaUi.Cargando) return
+        viewModelScope.launch {
+            _carga.value = CargaUi.Cargando
+            val inicio = System.currentTimeMillis()
+            try {
+                val (perfil, pedidos) = bloque()
+                _carga.value = CargaUi.Exito(
+                    modo, perfil, pedidos.size, System.currentTimeMillis() - inicio
+                )
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                _carga.value = CargaUi.Error("No se pudo cargar: " + e.message)
+            }
+        }
+    }
 }
