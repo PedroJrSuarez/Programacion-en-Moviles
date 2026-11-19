@@ -26,21 +26,36 @@ class TareasViewModel(private val repo: TareasRepository) : ViewModel() {
     private val _progreso = MutableStateFlow(0f)
     val progreso: StateFlow<Float> = _progreso.asStateFlow()
 
+    private val _corriendo = MutableStateFlow(false)
+    val corriendo: StateFlow<Boolean> = _corriendo.asStateFlow()
+
+    private var trabajo: Job? = null
+
     fun tareaLarga() {
-        viewModelScope.launch {
-            _progreso.value = 0f
-            _mensaje.value = "Trabajando..."
-            withContext(Dispatchers.Default) {
-                for (i in 1..100) {
-                    delay(40)
-                    _progreso.value = i / 100f
+        if (trabajo?.isActive == true) return
+        trabajo = viewModelScope.launch {
+            _corriendo.value = true
+            try {
+                _progreso.value = 0f
+                _mensaje.value = "Trabajando..."
+                withContext(Dispatchers.Default) {
+                    for (i in 1..100) {
+                        delay(40)
+                        _progreso.value = i / 100f
+                    }
                 }
+                _mensaje.value = "Terminó"
+            } finally {
+                _corriendo.value = false
             }
-            _mensaje.value = "Terminó"
         }
     }
 
-    // TODO Paso 4: trabajo (Job), corriendo y cancelar()
+    fun cancelar() {
+        if (!_corriendo.value) return
+        trabajo?.cancel()
+        _mensaje.value = "Cancelado"
+    }
 
     private val _primos = MutableStateFlow<PrimosUi>(PrimosUi.Inicial)
     val primos: StateFlow<PrimosUi> = _primos.asStateFlow()
