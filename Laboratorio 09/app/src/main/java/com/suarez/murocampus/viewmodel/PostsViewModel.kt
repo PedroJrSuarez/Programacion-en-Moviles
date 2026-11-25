@@ -96,3 +96,5 @@ class PostsViewModel(private val repo: PostRepository) : ViewModel() {
         _crearEstado.value = null
     }
 }
+
+// Filtro por usuario soportado mediante Query
