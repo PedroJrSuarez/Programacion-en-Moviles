@@ -8,6 +8,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.suarez.murocampus.model.Post
@@ -17,7 +18,9 @@ import com.suarez.murocampus.viewmodel.UiState
 @Composable
 fun PantallaLista(
     estadoLista: UiState<List<Post>>,
+    busqueda: String,
     usuarioFiltro: Int?,
+    onBuscar: (String) -> Unit,
     onFiltrar: (Int?) -> Unit,
     onReintentar: () -> Unit,
     onPostClick: (Int) -> Unit,
@@ -44,7 +47,16 @@ fun PantallaLista(
                 .fillMaxSize()
                 .padding(innerPadding)
         ) {
-            // Chips row for filtering by user
+            OutlinedTextField(
+                value = busqueda,
+                onValueChange = onBuscar,
+                label = { Text("Buscar por título") },
+                singleLine = true,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 4.dp)
+            )
+
             LazyRow(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -81,7 +93,18 @@ fun PantallaLista(
                 is UiState.Exito -> {
                     val posts = estadoLista.datos
                     if (posts.isEmpty()) {
-                        SinPublicaciones()
+                        if (busqueda.isBlank()) {
+                            SinPublicaciones()
+                        } else {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .padding(16.dp),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Text("Sin resultados para \"$busqueda\"")
+                            }
+                        }
                     } else {
                         LazyColumn(
                             modifier = Modifier.fillMaxSize(),

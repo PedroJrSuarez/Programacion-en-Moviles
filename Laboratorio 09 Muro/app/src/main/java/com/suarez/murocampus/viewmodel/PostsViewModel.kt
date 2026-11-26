@@ -6,16 +6,34 @@ import com.suarez.murocampus.data.PostRepository
 import com.suarez.murocampus.model.DetalleUi
 import com.suarez.murocampus.model.NuevoPost
 import com.suarez.murocampus.model.Post
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+
+internal fun filtrarPorTitulo(posts: List<Post>, titulo: String): List<Post> {
+    val consulta = titulo.trim()
+    return if (consulta.isEmpty()) posts
+    else posts.filter { it.title.contains(consulta, ignoreCase = true) }
+}
 
 class PostsViewModel(private val repo: PostRepository) : ViewModel() {
 
     private val _lista = MutableStateFlow<UiState<List<Post>>>(UiState.Cargando)
-    val lista = _lista.asStateFlow()
+    private val _busqueda = MutableStateFlow("")
+    val busqueda = _busqueda.asStateFlow()
+    val lista = combine(_lista, _busqueda) { estado, consulta ->
+        if (estado is UiState.Exito) {
+            UiState.Exito(filtrarPorTitulo(estado.datos, consulta))
+        } else {
+            estado
+        }
+    }.stateIn(viewModelScope, SharingStarted.Eagerly, UiState.Cargando)
 
     private val _detalle = MutableStateFlow<UiState<DetalleUi>>(UiState.Cargando)
     val detalle = _detalle.asStateFlow()
@@ -51,6 +69,10 @@ class PostsViewModel(private val repo: PostRepository) : ViewModel() {
         cargar()
     }
 
+    fun buscar(titulo: String) {
+        _busqueda.value = titulo
+    }
+
     fun abrir(id: Int) {
         viewModelScope.launch {
             _detalle.value = UiState.Cargando
@@ -74,6 +96,8 @@ class PostsViewModel(private val repo: PostRepository) : ViewModel() {
                         _detalle.value = UiState.Error(mensajeDe(errorThrowable))
                     }
                 }
+            } catch (e: CancellationException) {
+                throw e
             } catch (e: Exception) {
                 _detalle.value = UiState.Error(mensajeDe(e))
             }

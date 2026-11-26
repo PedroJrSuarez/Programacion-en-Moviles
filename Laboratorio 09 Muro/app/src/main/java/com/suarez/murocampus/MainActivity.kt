@@ -37,6 +37,7 @@ class MainActivity : ComponentActivity() {
                 )
 
                 val estadoLista by viewModel.lista.collectAsStateWithLifecycle()
+                val busqueda by viewModel.busqueda.collectAsStateWithLifecycle()
                 val usuarioFiltro by viewModel.usuarioFiltro.collectAsStateWithLifecycle()
                 val estadoDetalle by viewModel.detalle.collectAsStateWithLifecycle()
                 val crearEstado by viewModel.crearEstado.collectAsStateWithLifecycle()
@@ -51,7 +52,9 @@ class MainActivity : ComponentActivity() {
                     is Pantalla.Lista -> {
                         PantallaLista(
                             estadoLista = estadoLista,
+                            busqueda = busqueda,
                             usuarioFiltro = usuarioFiltro,
+                            onBuscar = viewModel::buscar,
                             onFiltrar = { userId ->
                                 viewModel.filtrar(userId)
                             },
