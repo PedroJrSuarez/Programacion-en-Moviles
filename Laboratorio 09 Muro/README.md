@@ -1,10 +1,10 @@
 # MuroCampus
 
-**MuroCampus** es una aplicación Android desarrollada para el curso de Programación en Móviles (4to Ciclo), que consume el servicio web REST de [JSONPlaceholder](https://jsonplaceholder.typicode.com/) para listar publicaciones, ver detalles con sus comentarios, filtrar por usuario y crear nuevas publicaciones, comportándose correctamente ante fallas de conectividad.
+**MuroCampus** es una aplicación Android desarrollada para el curso de Programación en Móviles (4to Ciclo), que consume el servicio web REST de [JSONPlaceholder](https://jsonplaceholder.typicode.com/) para listar publicaciones, ver detalles con sus comentarios, filtrar por usuario, buscar por título, crear y eliminar publicaciones, comportándose correctamente ante fallas de conectividad.
 
 ## En funcionamiento
 
-![img.png](img.png)
+![img_2.png](img_2.png)
 
 ## Estructura de Paquetes
 
@@ -42,7 +42,17 @@ graph TD
 
 - **View:** Pantallas construidas con Jetpack Compose que observan el `StateFlow<UiState<T>>` del `ViewModel` usando `collectAsStateWithLifecycle()`. No conocen Retrofit ni excepciones de red.
 - **ViewModel:** Gestiona el estado de la UI (`Cargando`, `Éxito`, `Error`), invocando al `Repository` dentro de corrutinas (`viewModelScope.launch`).
-- **Repository:** Encapsula la fuente de datos remota (`PostApi`) y captura cualquier excepción convirtiéndola de forma segura en `Result.success` o `Result.failure`.
+- **Repository:** Encapsula la fuente de datos remota (`PostApi`) y convierte los errores de operación en `Result.failure`, propagando la cancelación de corrutinas.
+
+---
+
+## Mejoras de la Fase 2
+
+- **Búsqueda:** filtra por título las publicaciones ya descargadas; funciona junto con el filtro por usuario sin hacer una petición por cada texto ingresado.
+- **Encabezado HTTP:** un interceptor de OkHttp agrega `Accept: application/json` a todas las solicitudes.
+- **Eliminar:** la pantalla de detalle solicita confirmación y envía `DELETE posts/{id}`. El Repository comprueba el código HTTP mediante `Response<Unit>` y devuelve el resultado al ViewModel.
+
+JSONPlaceholder solo simula las eliminaciones: una respuesta exitosa quita la publicación de la lista actual, pero no persiste el cambio en el servidor. Las decisiones y prompts de estas mejoras están en [PROMPTS.md](PROMPTS.md).
 
 ---
 
