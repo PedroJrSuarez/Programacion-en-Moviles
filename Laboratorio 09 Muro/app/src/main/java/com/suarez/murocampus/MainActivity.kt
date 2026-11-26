@@ -41,6 +41,7 @@ class MainActivity : ComponentActivity() {
                 val usuarioFiltro by viewModel.usuarioFiltro.collectAsStateWithLifecycle()
                 val estadoDetalle by viewModel.detalle.collectAsStateWithLifecycle()
                 val crearEstado by viewModel.crearEstado.collectAsStateWithLifecycle()
+                val eliminarEstado by viewModel.eliminarEstado.collectAsStateWithLifecycle()
 
                 var pantallaActual by remember { mutableStateOf<Pantalla>(Pantalla.Lista) }
 
@@ -74,11 +75,15 @@ class MainActivity : ComponentActivity() {
                     is Pantalla.Detalle -> {
                         PantallaDetalle(
                             estadoDetalle = estadoDetalle,
+                            eliminarEstado = eliminarEstado,
                             onBackClick = {
                                 pantallaActual = Pantalla.Lista
                             },
                             onReintentar = {
                                 viewModel.abrir(pantalla.postId)
+                            },
+                            onEliminar = {
+                                viewModel.eliminar(pantalla.postId)
                             }
                         )
                     }
